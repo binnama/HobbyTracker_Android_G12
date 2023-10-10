@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "861241913574",
+    "project_id": "hobbytrackerapp23",
+    "storage_bucket": "hobbytrackerapp23.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:861241913574:android:d686acd0ef0f2d07300b27",
+        "android_client_info": {
+          "package_name": "hiof.g12"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBs_qjvxGa4NVRR70RHDPs0j8wAp9gChRk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
