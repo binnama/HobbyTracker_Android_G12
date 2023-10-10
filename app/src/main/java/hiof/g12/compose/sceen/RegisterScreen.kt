@@ -3,11 +3,13 @@ package hiof.g12.compose.sceen
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -30,10 +32,11 @@ fun RegisterScreen (){
 
     val hourglassIcon = painterResource(id = R.drawable.hourglass_v2)
     val inputSpacer = 2.dp
-    val imageModifier = Modifier.size(100.dp)
+    val imageModifier = Modifier.size(50.dp)
 
     //val bc_color = Color(0x343436)
     val passwordVisibility = remember { mutableStateOf(false) }
+    val checkedState = remember { mutableStateOf(true) }
 
     Surface (
         //color = bc_color,
@@ -45,7 +48,8 @@ fun RegisterScreen (){
         ) {
             Image(painter = hourglassIcon,
                 contentDescription = null,
-                modifier = imageModifier)
+                modifier = imageModifier,
+                )
 
             Text(text = "Register")
 
@@ -102,6 +106,14 @@ fun RegisterScreen (){
                 Text(text = "Sign up" )
             }
 
+            Row {
+                Checkbox(
+                    checked = checkedState.value,
+                    onCheckedChange = { checkedState.value = it})
+                Text(text = "I have read and accepts Terms and Conditions",
+                    //color = Color()
+                    modifier = Modifier.padding(16.dp))
+            }
         }
 
     }

@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">HobbyTracker</string>
+    <string name="welcome">Welcome</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign up</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="required">Required</string>
+    <string name="enter_username">Enter username</string>
+    <string name="enter_password">Enter password</string>
 </resources>
