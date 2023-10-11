@@ -36,7 +36,7 @@ fun RegisterScreen (){
 
     //val bc_color = Color(0x343436)
     val passwordVisibility = remember { mutableStateOf(false) }
-    val checkedState = remember { mutableStateOf(true) }
+    val checkedState = remember { mutableStateOf(false) }
 
     Surface (
         //color = bc_color,
