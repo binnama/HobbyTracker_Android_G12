@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import hiof.g12.compose.navigation.AppNavigation
 import hiof.g12.ui.theme.HobbyTrackerTheme
 
 //val db = Firebase.firestore
@@ -18,11 +19,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             HobbyTrackerTheme {
+
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = bc_color
                 ) {
+                    AppNavigation()
                     HobbyTrackerApp()
                 }
             }
@@ -36,6 +39,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun HobbyTrackerPreview() {
     HobbyTrackerTheme {
-        HobbyTrackerApp()
+        AppNavigation()
+       //HobbyTrackerApp()
     }
 }
