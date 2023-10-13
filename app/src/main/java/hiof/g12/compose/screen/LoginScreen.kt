@@ -38,7 +38,7 @@ fun LoginScreen () {
             Spacer(modifier = Modifier.height(20.dp))
             PasswordTextFieldComponent(labelValue = stringResource(id = R.string.enter_password))
             Spacer(modifier = Modifier.height(10.dp))
-            CheckboxComponent(value = stringResource(id = R.string.terms_and_conditions))
+            //CheckboxComponent(value = stringResource(id = R.string.terms_and_conditions))
 
             Spacer(modifier = Modifier.height(20.dp))
             ButtonStartComponent(value = stringResource(id = R.string.login))

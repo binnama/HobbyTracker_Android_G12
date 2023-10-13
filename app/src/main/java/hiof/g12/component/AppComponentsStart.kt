@@ -107,7 +107,7 @@ fun MyTextFieldComponent (labelValue: String) {
     val textValue = remember { mutableStateOf("") }
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(),
-        label = { Text(text = labelValue, color = Color.Gray) },
+        label = { Text(text = labelValue, color = White) },
         value = textValue.value,
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = Primary,
@@ -131,7 +131,7 @@ fun PasswordTextFieldComponent (labelValue: String) {
 
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(),
-        label = { Text(text = labelValue, color = Color.Gray) },
+        label = { Text(text = labelValue, color = White) },
         value = password.value,
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = Primary,
