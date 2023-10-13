@@ -1,4 +1,4 @@
-package hiof.g12.compose.sceen;
+package hiof.g12.compose.screen;
 
 public class AddActivityScreen {
 }

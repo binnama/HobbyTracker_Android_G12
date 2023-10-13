@@ -1,8 +1,7 @@
 package hiof.g12
 
-import android.app.Application
 import androidx.compose.runtime.Composable
-import hiof.g12.compose.sceen.WelcomeScreen
+import hiof.g12.compose.screen.WelcomeScreen
 
 //@HiltAndroidApp
 @Composable
