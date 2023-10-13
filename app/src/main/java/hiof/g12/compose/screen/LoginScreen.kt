@@ -1,126 +1,54 @@
 package hiof.g12.compose.screen
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.height
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import hiof.g12.R
+import hiof.g12.component.ButtonStartComponent
+import hiof.g12.component.CheckboxComponent
+import hiof.g12.component.IconStart
+import hiof.g12.component.MyTextFieldComponent
+import hiof.g12.component.PasswordTextFieldComponent
+import hiof.g12.ui.theme.BackGroundColor
 
 
-// https://rrtutors.com/tutorials/how-to-create-compose-login-registration-pages
-// https://www.youtube.com/watch?v=PeUERQJnHdI
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen (login: () -> Unit,
-                 modifier: Modifier = Modifier) {
-    val username = remember { mutableStateOf(TextFieldValue()) }
-    val usernameErrorState = remember { mutableStateOf(false) }
-    val passwordErrorState = remember { mutableStateOf(false) }
-    val password = remember { mutableStateOf(TextFieldValue()) }
+fun LoginScreen () {
 
-    Column(horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    )
-    {
-        Spacer(Modifier.size(16.dp))
-        OutlinedTextField(
-            value = username.value,
-            onValueChange = {
-                if (usernameErrorState.value) {
-                    usernameErrorState.value = false
-                }
-            username.value = it
-        },
-            isError = usernameErrorState.value,
-            modifier = Modifier.fillMaxWidth(),
-            label = {
-                Text(text = stringResource(R.string.enter_username))
-            }
-        )
-        if (usernameErrorState.value) {
-            Text(text = stringResource(R.string.required), color = Color.Red)
-        }
-
-        Spacer(Modifier.size(16.dp))
-        val passwordVisibility = remember { mutableStateOf(true) }
-        OutlinedTextField(
-            /*
-            value = password,
-            onValueChange = { password = it},
-            visualTransformation = PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
-             */
-            value = password.value,
-            onValueChange = {
-                if (passwordErrorState.value) {
-                    passwordErrorState.value = false
-                }
-                password.value = it
-            },
-            isError = passwordErrorState.value,
+    Surface (
+        color = BackGroundColor,
+        modifier = Modifier.fillMaxSize()
+    ){
+        Column (
             modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            IconStart()
+            Spacer(modifier = Modifier.height(70.dp))
 
-            label = {
-                Text(text = stringResource(R.string.enter_password))
-            },
+            MyTextFieldComponent(labelValue = stringResource(id = R.string.username))
+            Spacer(modifier = Modifier.height(20.dp))
+            PasswordTextFieldComponent(labelValue = stringResource(id = R.string.enter_password))
+            Spacer(modifier = Modifier.height(10.dp))
+            CheckboxComponent(value = stringResource(id = R.string.terms_and_conditions))
 
-            /*
-            trailingIcon = {
-                IconButton(onClick = {passwordVisibility.value = !passwordVisibility.value})
-                {
-                    Icon(
-                        imageVector = if(passwordVisibility.value) Icons.Default.Close
-                        else Icons.Default.Check
-                    )
-                }
-            }
-             */
-        )
+            Spacer(modifier = Modifier.height(20.dp))
+            ButtonStartComponent(value = stringResource(id = R.string.login))
 
-        if (passwordErrorState.value) {
-            Text(text = stringResource(id = R.string.required))
         }
-
-        Spacer(Modifier.size(16.dp))
-        Button(onClick = { /*TODO*/ }) {
-            Text(text = "Login")
-        }
-/*
-        Button(
-            onClick = { login() },
-            {
-                content = {
-                    Text(text = "Login")
-                }
-                )
-        }
- */
-
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun LoginPreview() {
-    LoginScreen({})
+    LoginScreen()
 }

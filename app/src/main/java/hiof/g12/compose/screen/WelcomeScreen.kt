@@ -1,41 +1,46 @@
 package hiof.g12.compose.screen
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
+
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import hiof.g12.R
+import hiof.g12.component.ButtonStartComponent
+import hiof.g12.component.HeaderTextComponent
+import hiof.g12.component.IconStart
+import hiof.g12.ui.theme.BackGroundColor
 
 @Composable
 fun WelcomeScreen () {
-    val hourglassIcon = painterResource(id = R.drawable.hourglass_v2)
-    val imageModifier = Modifier.size(100.dp)
 
-    Column (
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-    ){
-        Image(painter = hourglassIcon,
-            contentDescription = null,
-            modifier = imageModifier
-        )
+    Surface (
+        color = BackGroundColor,
+        modifier = Modifier
+            .fillMaxSize()
+            //.padding(28.dp)
+    ) {
+        Column (
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ){
 
-        Text(text = stringResource(R.string.welcome))
+            IconStart()
+            Spacer(modifier = Modifier.height(70.dp))
+            HeaderTextComponent(value = stringResource(id = R.string.welcome))
+            Spacer(modifier = Modifier.height(70.dp))
 
-        Button(onClick = { /*TODO*/ }) {
-            Text(text = stringResource(R.string.login) )
-        }
-        Button(onClick = { /*TODO*/ }) {
-            Text(text = stringResource(R.string.sign_up) )
+            ButtonStartComponent(value = stringResource(id = R.string.login))
+            Spacer(modifier = Modifier.height(150.dp))
+            ButtonStartComponent(value = stringResource(id = R.string.sign_up))
+
         }
     }
 }
