@@ -38,9 +38,11 @@ fun WelcomeScreen () {
             Spacer(modifier = Modifier.height(70.dp))
 
             ButtonStartComponent(value = stringResource(id = R.string.login))
-            Spacer(modifier = Modifier.height(150.dp))
+            Spacer(modifier = Modifier.height(130.dp))
             ButtonStartComponent(value = stringResource(id = R.string.sign_up))
 
+            Spacer(modifier = Modifier.height(130.dp))
+            ButtonStartComponent(value = stringResource(R.string.continue_without_login))
         }
     }
 }
