@@ -21,6 +21,7 @@ import androidx.navigation.compose.rememberNavController
 import hiof.g12.compose.screen.HobbiesScreen
 import hiof.g12.compose.screen.HomeScreen
 import hiof.g12.compose.screen.MyDiaryScreen
+import hiof.g12.compose.screen.WelcomeScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -59,8 +60,11 @@ fun AppNavigation() {
     ) {paddingValues ->
         NavHost(
             navController = navController ,
-            startDestination = Screens.HomeScreen.name,
+            startDestination = Screens.WelcomeScreen.name,
             modifier = Modifier.padding(paddingValues)) {
+            composable(route = Screens.WelcomeScreen.name) {
+                WelcomeScreen()
+            }
             composable(route = Screens.HomeScreen.name) {
                 HomeScreen()
             }

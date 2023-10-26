@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
                     color = bc_color
                 ) {
                     AppNavigation()
-                    HobbyTrackerApp()
+                    // HobbyTrackerApp()
                 }
             }
         }
