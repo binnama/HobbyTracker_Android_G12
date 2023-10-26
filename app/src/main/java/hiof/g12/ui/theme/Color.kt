@@ -2,7 +2,7 @@ package hiof.g12.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val BackGroundColor = Color(0x3426296D)
+val BackGroundColor = Color(0xFF343436)
 val White = Color(0xFFFFFFFF)
 val Primary = Color(0xFF92A3FD)
 val Secondary = Color(0xFF9DCEFF)

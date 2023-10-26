@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import hiof.g12.R
 import hiof.g12.component.ButtonStartComponent
 import hiof.g12.component.CheckboxComponent
+import hiof.g12.component.DividerTextComponent
 import hiof.g12.component.IconStart
 import hiof.g12.component.MyTextFieldComponent
 import hiof.g12.component.PasswordTextFieldComponent
@@ -49,20 +50,23 @@ fun RegisterScreen (){
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             IconStart()
-            Spacer(modifier = Modifier.height(70.dp))
+            Spacer(modifier = Modifier.height(50.dp))
 
             MyTextFieldComponent(labelValue = stringResource(id = R.string.username))
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(5.dp))
             MyTextFieldComponent(labelValue = stringResource(id = R.string.email))
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(5.dp))
             PasswordTextFieldComponent(labelValue = stringResource(id = R.string.enter_password))
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(5.dp))
             PasswordTextFieldComponent(labelValue = stringResource(id = R.string.confirm_password))
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(5.dp))
             CheckboxComponent(value = stringResource(id = R.string.terms_and_conditions))
 
-            Spacer(modifier = Modifier.height(100.dp))
+            Spacer(modifier = Modifier.height(15.dp))
             ButtonStartComponent(value = stringResource(id = R.string.sign_up))
+
+            Spacer(modifier = Modifier.height(15.dp))
+            DividerTextComponent()
 
 
         }

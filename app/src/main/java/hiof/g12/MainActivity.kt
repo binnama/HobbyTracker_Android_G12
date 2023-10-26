@@ -10,10 +10,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import hiof.g12.compose.navigation.AppNavigation
+import hiof.g12.ui.theme.BackGroundColor
 import hiof.g12.ui.theme.HobbyTrackerTheme
 
 //val db = Firebase.firestore
-val bc_color = Color(0x343436)
+//val bc_color = Color(0xFF343436)
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +24,7 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = bc_color
+                    color = BackGroundColor
                 ) {
                     AppNavigation()
                     // HobbyTrackerApp()
