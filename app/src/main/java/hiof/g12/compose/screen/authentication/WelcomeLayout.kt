@@ -1,4 +1,4 @@
-package hiof.g12.compose.screen
+package hiof.g12.compose.screen.authentication
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column

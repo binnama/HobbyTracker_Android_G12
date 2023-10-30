@@ -1,4 +1,4 @@
-package hiof.g12.compose.screen
+package hiof.g12.compose.screen.authentication
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -44,7 +44,7 @@ fun LoginScreen () {
             UnderlinedNormalTextComponent(value = stringResource(id = R.string.forgot_password))
 
             Spacer(modifier = Modifier.height(10.dp))
-            ButtonStartComponent(value = stringResource(id = R.string.login))
+            ButtonStartComponent(value = stringResource(id = R.string.login), onClick = {/*Login bruker funksjonalitet her*/})
 
             Spacer(modifier = Modifier.height(20.dp))
             DividerTextComponent()
