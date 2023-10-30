@@ -6,5 +6,6 @@ enum class Screens {
     RegisterScreen,
     HomeScreen,
     HobbiesScreen,
+    AddHobbyScreen,
     MyDiaryScreen
 }
