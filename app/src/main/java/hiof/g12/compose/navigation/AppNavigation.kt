@@ -1,5 +1,7 @@
 package hiof.g12.compose.navigation
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -18,6 +20,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import hiof.g12.compose.screen.AddHobbyScreen
 import hiof.g12.compose.screen.HobbiesScreen
 import hiof.g12.compose.screen.HomeScreen
 import hiof.g12.compose.screen.LoginScreen
@@ -63,7 +66,9 @@ fun AppNavigation() {
         NavHost(
             navController = navController ,
             startDestination = Screens.WelcomeScreen.name,
-            modifier = Modifier.padding(paddingValues)) {
+            modifier = Modifier.padding(paddingValues),
+            enterTransition = { EnterTransition.None},
+            exitTransition = { ExitTransition.None}) {
             composable(route = Screens.WelcomeScreen.name) {
                 WelcomeScreen()
             }
@@ -80,7 +85,10 @@ fun AppNavigation() {
                 MyDiaryScreen()
             }
             composable(route = Screens.HobbiesScreen.name) {
-                HobbiesScreen()
+                HobbiesScreen(navController = navController)
+            }
+            composable(route = Screens.AddHobbyScreen.name) {
+                AddHobbyScreen(navController = navController)
             }
         }
     }
