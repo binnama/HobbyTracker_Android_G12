@@ -192,8 +192,8 @@ fun PasswordTextFieldComponent (labelValue: String) {
 }
 
 @Composable
-fun ButtonStartComponent (value: String) {
-    Button(onClick = { /*TODO*/ },
+fun ButtonStartComponent (value: String, onClick: () -> Unit) {
+    Button(onClick = onClick,
         modifier = Modifier
             //.fillMaxWidth()
             .width(350.dp)
