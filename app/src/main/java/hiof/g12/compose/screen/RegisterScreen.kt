@@ -25,6 +25,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import hiof.g12.R
 import hiof.g12.component.ButtonStartComponent
 import hiof.g12.component.CheckboxComponent
@@ -33,12 +35,15 @@ import hiof.g12.component.DividerTextComponent
 import hiof.g12.component.IconStart
 import hiof.g12.component.MyTextFieldComponent
 import hiof.g12.component.PasswordTextFieldComponent
+import hiof.g12.compose.data.LoginViewModel
+import hiof.g12.compose.data.UIEvent
 import hiof.g12.compose.navigation.AppNavigation
 import hiof.g12.ui.theme.BackGroundColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegisterScreen (){
+fun RegisterScreen (navController: NavController,
+                    loginViewModel: LoginViewModel = viewModel()){
 
     Surface (
         color = BackGroundColor,
@@ -51,13 +56,23 @@ fun RegisterScreen (){
             IconStart()
             Spacer(modifier = Modifier.height(50.dp))
 
-            MyTextFieldComponent(labelValue = stringResource(id = R.string.username))
+            MyTextFieldComponent(labelValue = stringResource(id = R.string.username),
+                onTextSelected = {
+                    loginViewModel.onEvent(UIEvent.UsernameChanged(it))
+
+                })
             Spacer(modifier = Modifier.height(5.dp))
-            MyTextFieldComponent(labelValue = stringResource(id = R.string.email))
+            MyTextFieldComponent(labelValue = stringResource(id = R.string.email),
+                onTextSelected = {
+                    loginViewModel.onEvent(UIEvent.UsernameChanged(it))
+
+                })
             Spacer(modifier = Modifier.height(5.dp))
-            PasswordTextFieldComponent(labelValue = stringResource(id = R.string.enter_password))
-            Spacer(modifier = Modifier.height(5.dp))
-            PasswordTextFieldComponent(labelValue = stringResource(id = R.string.confirm_password))
+            PasswordTextFieldComponent(labelValue = stringResource(id = R.string.enter_password),
+                onTextSelected = {
+                    loginViewModel.onEvent(UIEvent.PasswordChanged(it))
+
+                })
             Spacer(modifier = Modifier.height(5.dp))
             CheckboxComponent(value = stringResource(id = R.string.terms_and_conditions))
 
@@ -73,8 +88,10 @@ fun RegisterScreen (){
     }
 }
 
+/*
 @Preview
 @Composable
 fun RegisterScreenPreview() {
     RegisterScreen()
 }
+*/

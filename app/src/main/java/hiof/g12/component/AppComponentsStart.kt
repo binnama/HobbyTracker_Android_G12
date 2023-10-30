@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
@@ -34,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -41,6 +43,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -123,7 +126,9 @@ fun IconStart () {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyTextFieldComponent (labelValue: String) {
+fun MyTextFieldComponent (labelValue: String,
+                          onTextSelected: (String) -> Unit
+) {
 
     val textValue = remember { mutableStateOf("") }
     OutlinedTextField(
@@ -138,16 +143,24 @@ fun MyTextFieldComponent (labelValue: String) {
             cursorColor = Primary,
             containerColor = InputBGColor,
         ),
-        keyboardOptions = KeyboardOptions.Default,
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        singleLine = true,
+        maxLines = 1,
         onValueChange = {
             textValue.value = it
-        }
+            onTextSelected(it)
+        },
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PasswordTextFieldComponent (labelValue: String) {
+fun PasswordTextFieldComponent (labelValue: String,
+                                onTextSelected: (String) -> Unit
+
+) {
+
+    val localFocusManager = LocalFocusManager.current
 
     val password = remember { mutableStateOf("") }
     val passwordVisible = remember { mutableStateOf(false) }
@@ -164,9 +177,15 @@ fun PasswordTextFieldComponent (labelValue: String) {
             cursorColor = Primary,
             containerColor = InputBGColor,
         ),
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
+        singleLine = true,
+        maxLines = 1,
+        keyboardActions = KeyboardActions {
+                                          localFocusManager.clearFocus()
+        },
         onValueChange = {
             password.value = it
+            onTextSelected(it)
         },
         trailingIcon = {
             val iconImage = if(passwordVisible.value) {

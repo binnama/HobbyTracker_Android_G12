@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import hiof.g12.R
 import hiof.g12.component.ButtonStartComponent
 import hiof.g12.component.ClickableLoginTextComponent
@@ -23,7 +24,7 @@ import hiof.g12.ui.theme.BackGroundColor
 
 
 @Composable
-fun LoginScreen () {
+fun LoginScreen (navController: NavController) {
 
     Surface (
         color = BackGroundColor,
@@ -36,9 +37,15 @@ fun LoginScreen () {
             IconStart()
             Spacer(modifier = Modifier.height(50.dp))
 
-            MyTextFieldComponent(labelValue = stringResource(id = R.string.username))
+            MyTextFieldComponent(labelValue = stringResource(id = R.string.username),
+                onTextSelected = {
+
+                })
             Spacer(modifier = Modifier.height(20.dp))
-            PasswordTextFieldComponent(labelValue = stringResource(id = R.string.enter_password))
+            PasswordTextFieldComponent(labelValue = stringResource(id = R.string.enter_password),
+                onTextSelected = {
+
+                })
 
             Spacer(modifier = Modifier.height(10.dp))
             UnderlinedNormalTextComponent(value = stringResource(id = R.string.forgot_password))
@@ -56,8 +63,10 @@ fun LoginScreen () {
     }
 }
 
+/*
 @Preview(showBackground = true)
 @Composable
 fun LoginPreview() {
     LoginScreen()
 }
+*/
