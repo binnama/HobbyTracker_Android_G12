@@ -72,9 +72,6 @@ fun AppNavigation() {
             composable(route = Screens.WelcomeScreen.name) {
                 WelcomeScreen()
             }
-            composable(route = Screens.LoginScreen.name) {
-                LoginScreen(navController = navController)
-            }
             composable(route = Screens.RegisterScreen.name) {
                 RegisterScreen(navController = navController)
             }

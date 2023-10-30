@@ -23,6 +23,9 @@ import hiof.g12.component.MyTextFieldComponent
 import hiof.g12.component.PasswordTextFieldComponent
 import hiof.g12.compose.data.register.RegisterViewModel
 import hiof.g12.compose.data.register.RegisterUIEvent
+import hiof.g12.compose.navigation.LoginNRegister.Screen
+import hiof.g12.compose.navigation.LoginNRegister.StartpagesRouter
+import hiof.g12.compose.navigation.LoginNRegister.SystemBackButtonHandler
 import hiof.g12.ui.theme.BackGroundColor
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -63,7 +66,10 @@ fun RegisterScreen (navController: NavController,
                 errorStatus = registerViewModel.registrationUIState.value.passwordError
             )
             Spacer(modifier = Modifier.height(5.dp))
-            CheckboxComponent(value = stringResource(id = R.string.terms_and_conditions))
+            CheckboxComponent(value = stringResource(id = R.string.terms_and_conditions),
+                onTextSelected = {
+                    StartpagesRouter.navigateTo(Screen.TermsAndCondScreen)
+                })
 
             Spacer(modifier = Modifier.height(5.dp))
             ButtonStartComponent(value = stringResource(id = R.string.sign_up),
@@ -75,8 +81,13 @@ fun RegisterScreen (navController: NavController,
             DividerTextComponent()
 
             ClickableLoginTextComponent(tryingToLogin = true, onTextSelected = {
+                StartpagesRouter.navigateTo(Screen.LoginScreen)
             })
         }
+    }
+
+    SystemBackButtonHandler {
+        StartpagesRouter.navigateTo(Screen.WelcomeScreen)
     }
 }
 

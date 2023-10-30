@@ -251,7 +251,9 @@ fun ButtonStartComponent (value: String,
 }
 
 @Composable
-fun CheckboxComponent(value: String) {
+fun CheckboxComponent(value: String,
+                      onTextSelected: (String) -> Unit,
+                      ) {
     Row (
         modifier = Modifier
             .fillMaxWidth()
@@ -265,13 +267,14 @@ fun CheckboxComponent(value: String) {
             checkedState.value != checkedState.value
         } )
 
-        ClickableTextComponent(value = value)
+        ClickableTextComponent(value = value, onTextSelected)
     }
 }
 
 @Composable
-fun ClickableTextComponent(value: String) {
-
+fun ClickableTextComponent(value: String,
+                           onTextSelected: (String) -> Unit
+) {
     val initialText = "By continuing you accept our "
     val privacyPolicyText = "Privacy Policy "
     val andText = "and "
@@ -302,7 +305,6 @@ fun ClickableTextComponent(value: String) {
 
 
 @Composable
-// Denne må endres senere :)
 fun ClickableLoginTextComponent(tryingToLogin: Boolean = true, onTextSelected: (String) -> Unit) {
 
     val initialText = if (tryingToLogin) "Already have an account? "

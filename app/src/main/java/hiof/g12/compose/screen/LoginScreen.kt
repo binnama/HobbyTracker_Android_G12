@@ -23,11 +23,14 @@ import hiof.g12.component.PasswordTextFieldComponent
 import hiof.g12.component.UnderlinedNormalTextComponent
 import hiof.g12.compose.data.login.LoginUIEvent
 import hiof.g12.compose.data.login.LoginViewModel
+import hiof.g12.compose.navigation.LoginNRegister.Screen
+import hiof.g12.compose.navigation.LoginNRegister.StartpagesRouter
+import hiof.g12.compose.navigation.LoginNRegister.SystemBackButtonHandler
 import hiof.g12.ui.theme.BackGroundColor
 
 
 @Composable
-fun LoginScreen (navController: NavController,
+fun LoginScreen (
                  loginViewModel: LoginViewModel = viewModel()
 ) {
     Surface (
@@ -65,9 +68,15 @@ fun LoginScreen (navController: NavController,
             DividerTextComponent()
 
             Spacer(modifier = Modifier.height(20.dp))
-            ClickableLoginTextComponent(tryingToLogin = false,  onTextSelected = {})
+            ClickableLoginTextComponent(tryingToLogin = false,  onTextSelected = {
+                StartpagesRouter.navigateTo(Screen.RegisterScreen)
+            })
 
         }
+    }
+
+    SystemBackButtonHandler {
+        StartpagesRouter.navigateTo(Screen.WelcomeScreen)
     }
 }
 
