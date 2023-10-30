@@ -13,12 +13,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import hiof.g12.R
 import hiof.g12.component.ButtonStartComponent
-import hiof.g12.component.CheckboxComponent
-import hiof.g12.component.CheckboxLoginComponent
 import hiof.g12.component.ClickableLoginTextComponent
+import hiof.g12.component.DividerTextComponent
 import hiof.g12.component.IconStart
 import hiof.g12.component.MyTextFieldComponent
 import hiof.g12.component.PasswordTextFieldComponent
+import hiof.g12.component.UnderlinedNormalTextComponent
 import hiof.g12.ui.theme.BackGroundColor
 
 
@@ -39,11 +39,18 @@ fun LoginScreen () {
             MyTextFieldComponent(labelValue = stringResource(id = R.string.username))
             Spacer(modifier = Modifier.height(20.dp))
             PasswordTextFieldComponent(labelValue = stringResource(id = R.string.enter_password))
+
             Spacer(modifier = Modifier.height(10.dp))
-            CheckboxLoginComponent(value = stringResource(R.string.already_have_an_account_login) )
+            UnderlinedNormalTextComponent(value = stringResource(id = R.string.forgot_password))
+
+            Spacer(modifier = Modifier.height(10.dp))
+            ButtonStartComponent(value = stringResource(id = R.string.login))
 
             Spacer(modifier = Modifier.height(20.dp))
-            ButtonStartComponent(value = stringResource(id = R.string.login))
+            DividerTextComponent()
+
+            Spacer(modifier = Modifier.height(20.dp))
+            ClickableLoginTextComponent(tryingToLogin = false,  onTextSelected = {})
 
         }
     }

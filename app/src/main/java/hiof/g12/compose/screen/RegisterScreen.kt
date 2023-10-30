@@ -28,18 +28,17 @@ import androidx.compose.ui.unit.dp
 import hiof.g12.R
 import hiof.g12.component.ButtonStartComponent
 import hiof.g12.component.CheckboxComponent
+import hiof.g12.component.ClickableLoginTextComponent
 import hiof.g12.component.DividerTextComponent
 import hiof.g12.component.IconStart
 import hiof.g12.component.MyTextFieldComponent
 import hiof.g12.component.PasswordTextFieldComponent
+import hiof.g12.compose.navigation.AppNavigation
 import hiof.g12.ui.theme.BackGroundColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegisterScreen (){
-
-    val hourglassIcon = painterResource(id = R.drawable.hourglass_v2)
-    val imageModifier = Modifier.size(50.dp)
 
     Surface (
         color = BackGroundColor,
@@ -62,13 +61,14 @@ fun RegisterScreen (){
             Spacer(modifier = Modifier.height(5.dp))
             CheckboxComponent(value = stringResource(id = R.string.terms_and_conditions))
 
-            Spacer(modifier = Modifier.height(15.dp))
+            Spacer(modifier = Modifier.height(5.dp))
             ButtonStartComponent(value = stringResource(id = R.string.sign_up))
 
             Spacer(modifier = Modifier.height(15.dp))
             DividerTextComponent()
 
-
+            ClickableLoginTextComponent(tryingToLogin = true, onTextSelected = {
+            })
         }
     }
 }

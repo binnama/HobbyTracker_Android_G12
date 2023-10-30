@@ -20,7 +20,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import hiof.g12.compose.screen.HobbiesScreen
 import hiof.g12.compose.screen.HomeScreen
+import hiof.g12.compose.screen.LoginScreen
 import hiof.g12.compose.screen.MyDiaryScreen
+import hiof.g12.compose.screen.RegisterScreen
 import hiof.g12.compose.screen.WelcomeScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -64,6 +66,12 @@ fun AppNavigation() {
             modifier = Modifier.padding(paddingValues)) {
             composable(route = Screens.WelcomeScreen.name) {
                 WelcomeScreen()
+            }
+            composable(route = Screens.LoginScreen.name) {
+                LoginScreen()
+            }
+            composable(route = Screens.RegisterScreen.name) {
+                RegisterScreen()
             }
             composable(route = Screens.HomeScreen.name) {
                 HomeScreen()

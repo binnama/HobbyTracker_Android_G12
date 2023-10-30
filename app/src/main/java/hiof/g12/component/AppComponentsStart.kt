@@ -45,6 +45,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -68,6 +69,24 @@ fun NormalTextComponent(value: String) {
             fontStyle = FontStyle.Normal,
         ),
         textAlign = TextAlign.Center
+    )
+}
+
+@Composable
+fun UnderlinedNormalTextComponent(value: String) {
+    Text(
+        text = value,
+        color = White,
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(min = 50.dp),
+        style = TextStyle(
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Normal,
+            fontStyle = FontStyle.Normal,
+        ),
+        textAlign = TextAlign.Center,
+        textDecoration = TextDecoration.Underline,
     )
 }
 
@@ -252,31 +271,15 @@ fun ClickableTextComponent(value: String) {
     })
 }
 
-@Composable
-fun CheckboxLoginComponent(value: String) {
-    Row (
-        modifier = Modifier
-            .fillMaxWidth()
-            .heightIn(56.dp)
-            .padding(12.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ){
-        val checkedState = remember { mutableStateOf(false) }
-
-        Checkbox(checked = checkedState.value, onCheckedChange = {
-            checkedState.value != checkedState.value
-        } )
-
-        ClickableLoginTextComponent(value = value)
-    }
-}
 
 @Composable
 // Denne må endres senere :)
-fun ClickableLoginTextComponent(value: String) {
+fun ClickableLoginTextComponent(tryingToLogin: Boolean = true, onTextSelected: (String) -> Unit) {
 
-    val initialText = "Already have an account? "
-    val loginText = "Login"
+    val initialText = if (tryingToLogin) "Already have an account? "
+    else "Don't have an account yet? "
+    val loginText = if (tryingToLogin) "Login"
+    else "Register"
 
     val annotatedString = buildAnnotatedString {
         pushStyle(SpanStyle(color = White))
@@ -292,7 +295,7 @@ fun ClickableLoginTextComponent(value: String) {
             .fillMaxWidth()
             .heightIn(min = 50.dp),
         style = TextStyle(
-            fontSize = 32.sp,
+            fontSize = 16.sp,
             fontWeight = FontWeight.Normal,
             fontStyle = FontStyle.Normal,
             textAlign = TextAlign.Center,
@@ -303,12 +306,9 @@ fun ClickableLoginTextComponent(value: String) {
                 .firstOrNull()?.also {span ->
                     Log.d("ClickableTextComponent", "{$span}")
 
-                    /*
                     if (span.item == loginText) {
                         onTextSelected(span.item)
                     }
-
-                     */
                 }
         })
 }
