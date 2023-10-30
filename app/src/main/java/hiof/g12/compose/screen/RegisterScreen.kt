@@ -1,29 +1,15 @@
 package hiof.g12.compose.screen
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -35,16 +21,15 @@ import hiof.g12.component.DividerTextComponent
 import hiof.g12.component.IconStart
 import hiof.g12.component.MyTextFieldComponent
 import hiof.g12.component.PasswordTextFieldComponent
-import hiof.g12.compose.data.LoginViewModel
-import hiof.g12.compose.data.UIEvent
-import hiof.g12.compose.navigation.AppNavigation
+import hiof.g12.compose.data.register.RegisterViewModel
+import hiof.g12.compose.data.register.RegisterUIEvent
 import hiof.g12.ui.theme.BackGroundColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegisterScreen (navController: NavController,
-                    loginViewModel: LoginViewModel = viewModel()){
-
+                    registerViewModel: RegisterViewModel = viewModel()
+){
     Surface (
         color = BackGroundColor,
         modifier = Modifier.fillMaxSize()
@@ -58,26 +43,33 @@ fun RegisterScreen (navController: NavController,
 
             MyTextFieldComponent(labelValue = stringResource(id = R.string.username),
                 onTextSelected = {
-                    loginViewModel.onEvent(UIEvent.UsernameChanged(it))
+                    registerViewModel.onEvent(RegisterUIEvent.UsernameChanged(it))
 
-                })
+                },
+                errorStatus = registerViewModel.registrationUIState.value.usernameError
+            )
             Spacer(modifier = Modifier.height(5.dp))
             MyTextFieldComponent(labelValue = stringResource(id = R.string.email),
                 onTextSelected = {
-                    loginViewModel.onEvent(UIEvent.UsernameChanged(it))
-
-                })
+                    registerViewModel.onEvent(RegisterUIEvent.UsernameChanged(it))
+                },
+                errorStatus = registerViewModel.registrationUIState.value.emailError
+            )
             Spacer(modifier = Modifier.height(5.dp))
             PasswordTextFieldComponent(labelValue = stringResource(id = R.string.enter_password),
                 onTextSelected = {
-                    loginViewModel.onEvent(UIEvent.PasswordChanged(it))
-
-                })
+                    registerViewModel.onEvent(RegisterUIEvent.PasswordChanged(it))
+                },
+                errorStatus = registerViewModel.registrationUIState.value.passwordError
+            )
             Spacer(modifier = Modifier.height(5.dp))
             CheckboxComponent(value = stringResource(id = R.string.terms_and_conditions))
 
             Spacer(modifier = Modifier.height(5.dp))
-            ButtonStartComponent(value = stringResource(id = R.string.sign_up))
+            ButtonStartComponent(value = stringResource(id = R.string.sign_up),
+                onButtonClicked = {
+                    registerViewModel.onEvent(RegisterUIEvent.RegisterButtonClicked)
+                })
 
             Spacer(modifier = Modifier.height(15.dp))
             DividerTextComponent()

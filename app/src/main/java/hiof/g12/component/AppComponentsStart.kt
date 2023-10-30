@@ -127,7 +127,8 @@ fun IconStart () {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyTextFieldComponent (labelValue: String,
-                          onTextSelected: (String) -> Unit
+                          onTextSelected: (String) -> Unit,
+                          errorStatus: Boolean = false
 ) {
 
     val textValue = remember { mutableStateOf("") }
@@ -150,13 +151,15 @@ fun MyTextFieldComponent (labelValue: String,
             textValue.value = it
             onTextSelected(it)
         },
+        isError = !errorStatus
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PasswordTextFieldComponent (labelValue: String,
-                                onTextSelected: (String) -> Unit
+                                onTextSelected: (String) -> Unit,
+                                errorStatus: Boolean = false
 
 ) {
 
@@ -206,17 +209,24 @@ fun PasswordTextFieldComponent (labelValue: String,
 
         },
         visualTransformation = if(passwordVisible.value) VisualTransformation.None
-        else PasswordVisualTransformation()
+        else PasswordVisualTransformation(),
+
+        isError = !errorStatus
     )
 }
 
 @Composable
-fun ButtonStartComponent (value: String) {
-    Button(onClick = { /*TODO*/ },
+fun ButtonStartComponent (value: String,
+                          onButtonClicked : () -> Unit
+) {
+    Button(
         modifier = Modifier
             //.fillMaxWidth()
             .width(350.dp)
             .heightIn(48.dp),
+        onClick = {
+                  onButtonClicked.invoke()
+        },
         contentPadding = PaddingValues(),
         //colors = ButtonDefaults.buttonColors(Color.Transparent)
         colors = ButtonDefaults.buttonColors(Color.White)
