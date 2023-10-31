@@ -1,6 +1,8 @@
 package hiof.g12.compose.navigation
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
@@ -13,19 +15,30 @@ data class NavItems(
 )
 
 val listOfNavItems = listOf(
+
+    NavItems(
+        label ="Hobbies",
+        icon = Icons.Default.List,
+        route = Screens.HobbiesScreen.name
+    ),
+    NavItems(
+        label ="Calendar",
+        icon = Icons.Default.CalendarMonth,
+        route = Screens.CalendarScreen.name
+    ),
     NavItems(
         label ="Home",
         icon = Icons.Default.Home,
         route = Screens.HomeScreen.name
     ),
     NavItems(
-        label ="My Hobbies",
-        icon = Icons.Default.List,
-        route = Screens.HobbiesScreen.name
+        label ="Social",
+        icon = Icons.Default.AccountBox,
+        route = Screens.SocialScreen.name
     ),
     NavItems(
-        label ="My Diary",
+        label ="Diary",
         icon = Icons.Default.Edit,
         route = Screens.MyDiaryScreen.name
-    ),
+    )
 )
