@@ -52,7 +52,7 @@ fun LoginScreen (navController: NavController) {
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            MyTextFieldComponent(
+            PasswordTextFieldComponent(
                 labelValue = stringResource(id = R.string.enter_password),
                 value = viewModel.password.value,
                 onValueChange = { newValue -> viewModel.password.value = newValue },
