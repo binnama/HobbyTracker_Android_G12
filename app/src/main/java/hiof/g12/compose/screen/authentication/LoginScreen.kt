@@ -47,7 +47,6 @@ fun LoginScreen (navController: NavController) {
                 labelValue = stringResource(id = R.string.enter_username),
                 value = viewModel.email.value,
                 onValueChange = { newValue -> viewModel.email.value = newValue },
-                // ... (any other parameters you have for MyTextFieldComponent)
             )
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -56,7 +55,6 @@ fun LoginScreen (navController: NavController) {
                 labelValue = stringResource(id = R.string.enter_password),
                 value = viewModel.password.value,
                 onValueChange = { newValue -> viewModel.password.value = newValue },
-                // ... (any other parameters you have for MyTextFieldComponent)
             )
 
             Spacer(modifier = Modifier.height(10.dp))
