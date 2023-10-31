@@ -54,7 +54,7 @@ fun RegisterScreen (navController: NavController,
             Spacer(modifier = Modifier.height(5.dp))
             MyTextFieldComponent(labelValue = stringResource(id = R.string.email),
                 onTextSelected = {
-                    registerViewModel.onEvent(RegisterUIEvent.UsernameChanged(it))
+                    registerViewModel.onEvent(RegisterUIEvent.EmailChanged(it))
                 },
                 errorStatus = registerViewModel.registrationUIState.value.emailError
             )
