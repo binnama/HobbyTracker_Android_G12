@@ -123,15 +123,17 @@ fun IconStart () {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyTextFieldComponent (labelValue: String) {
-
-    val textValue = remember { mutableStateOf("") }
+fun MyTextFieldComponent (
+    labelValue: String,
+    value: String,
+    onValueChange: (String) -> Unit
+) {
     OutlinedTextField(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
         label = { Text(text = labelValue, color = White) },
-        value = textValue.value,
+        value = value,
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = Primary,
             focusedLabelColor = Primary,
@@ -139,17 +141,17 @@ fun MyTextFieldComponent (labelValue: String) {
             containerColor = InputBGColor,
         ),
         keyboardOptions = KeyboardOptions.Default,
-        onValueChange = {
-            textValue.value = it
-        }
+        onValueChange = onValueChange
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PasswordTextFieldComponent (labelValue: String) {
+fun PasswordTextFieldComponent (
+    labelValue: String,
+    value: String,
+    onValueChange: (String) -> Unit) {
 
-    val password = remember { mutableStateOf("") }
     val passwordVisible = remember { mutableStateOf(false) }
 
     OutlinedTextField(
@@ -157,7 +159,7 @@ fun PasswordTextFieldComponent (labelValue: String) {
             .padding(16.dp)
             .fillMaxWidth(),
         label = { Text(text = labelValue, color = White) },
-        value = password.value,
+        value = value,
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = Primary,
             focusedLabelColor = Primary,
@@ -165,9 +167,7 @@ fun PasswordTextFieldComponent (labelValue: String) {
             containerColor = InputBGColor,
         ),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-        onValueChange = {
-            password.value = it
-        },
+        onValueChange = onValueChange,
         trailingIcon = {
             val iconImage = if(passwordVisible.value) {
                 Icons.Filled.Visibility
@@ -192,7 +192,7 @@ fun PasswordTextFieldComponent (labelValue: String) {
 }
 
 @Composable
-fun ButtonStartComponent (value: String, onClick: () -> Unit) {
+fun ButtonStartComponent (value: String, onClick: () -> Unit, isEnabled : Boolean = true) {
     Button(onClick = onClick,
         modifier = Modifier
             //.fillMaxWidth()
@@ -200,7 +200,8 @@ fun ButtonStartComponent (value: String, onClick: () -> Unit) {
             .heightIn(48.dp),
         contentPadding = PaddingValues(),
         //colors = ButtonDefaults.buttonColors(Color.Transparent)
-        colors = ButtonDefaults.buttonColors(Color.White)
+        colors = ButtonDefaults.buttonColors(Color.White),
+        enabled = isEnabled
     ) {
         Box(
             modifier = Modifier
