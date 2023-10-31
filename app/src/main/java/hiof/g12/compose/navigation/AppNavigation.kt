@@ -63,10 +63,10 @@ fun AppNavigation() {
                 WelcomeScreen(navController = navController)
             }
             composable(route = Screens.LoginScreen.name) {
-                LoginScreen()
+                LoginScreen(navController = navController)
             }
             composable(route = Screens.RegisterScreen.name) {
-                RegisterScreen()
+                RegisterScreen(navController = navController)
             }
             composable(route = Screens.HomeScreen.name) {
                 HomeScreen(navController = navController)

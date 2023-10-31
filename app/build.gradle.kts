@@ -69,12 +69,13 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended:1.5.3")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.navigation:navigation-runtime-ktx:2.7.4")
-    /*
+
     //firebase
     implementation(platform("com.google.firebase:firebase-abt:21.1.1"))
     implementation("com.google.firebase:firebase-auth-ktx:22.1.2")
     implementation("com.google.firebase:firebase-firestore-ktx:24.8.1")
     implementation("com.google.firebase:firebase-storage-ktx:20.2.1")
+    /*
     //hilt
     implementation("com.google.dagger:hilt-android:2.47")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
