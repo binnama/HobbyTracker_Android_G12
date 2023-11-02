@@ -28,8 +28,11 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -49,11 +52,17 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import hiof.g12.R
 import hiof.g12.ui.theme.InputBGColor
 import hiof.g12.ui.theme.Primary
 import hiof.g12.ui.theme.Secondary
 import hiof.g12.ui.theme.White
+import kotlinx.coroutines.tasks.await
 
 @Composable
 fun NormalTextComponent(value: String) {
@@ -346,4 +355,27 @@ fun DividerTextComponent() {
             thickness = 1.dp
         )
     }
+}
+
+// Get username from the DB
+@Composable
+fun UserNameDisplayComponent() {
+    var userName by remember { mutableStateOf("") }
+    val firebaseAuth = FirebaseAuth.getInstance()
+    val database: DatabaseReference = Firebase.database.reference
+
+    val user = firebaseAuth.currentUser
+    val userId = user?.uid
+
+    if (userId != null) {
+        LaunchedEffect(userId) {
+            val userRef = database.child("users").child(userId)
+            val snapshot = userRef.get().await()
+
+            if (snapshot.exists()) {
+                userName = snapshot.child("username").value.toString()
+            }
+        }
+    }
+    Text(text = "Hello, $userName")
 }
