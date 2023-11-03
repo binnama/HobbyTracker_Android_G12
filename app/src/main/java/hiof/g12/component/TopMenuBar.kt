@@ -1,9 +1,9 @@
+package hiof.g12.component
+
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -11,27 +11,24 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import hiof.g12.R
-import hiof.g12.compose.navigation.Screens
 import hiof.g12.ui.theme.BackGroundColor
 
-// TOPBAR TIL APPEN MED EGENDEFINERT TITTEL
+// MENU TOP BAR TIL APPEN UTEN TITTEL
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar(title: String, navController: NavController) {
+fun MenuTopBar(navController: NavController) {
     CenterAlignedTopAppBar(
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = BackGroundColor
         ),
         title = {
-            Text(text = title, color = Color.White)
+            Text(text = "", color = Color.White)
         },
         navigationIcon = {
             IconButton(onClick = { /*Navigering til hjem*/ }) {
@@ -42,13 +39,13 @@ fun TopBar(title: String, navController: NavController) {
             }
         },
         actions = {
-            IconButton(onClick = { navController.navigate(Screens.MenuScreen.name) }) {
+            IconButton(onClick = { navController.popBackStack() }) {
                 Icon(
-                    imageVector = Icons.Filled.Menu,
-                    contentDescription = "General Menu",
+                    imageVector = Icons.Filled.Close,
+                    contentDescription = "Close menu",
                     tint = Color.White
                 )
             }
         },
-        )
+    )
 }

@@ -16,7 +16,7 @@ import hiof.g12.ui.theme.BackGroundColor
 fun MyDiaryScreen(navController: NavController) {
     Surface(modifier = Modifier.fillMaxSize(), color = BackGroundColor) {
         Box(modifier = Modifier.fillMaxSize()) {
-            TopBar("Diary")
+            TopBar("Diary", navController)
 
             Column(
                 modifier = Modifier.align(Alignment.Center),
