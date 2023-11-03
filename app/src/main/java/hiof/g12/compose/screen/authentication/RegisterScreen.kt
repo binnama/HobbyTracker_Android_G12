@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -65,14 +66,29 @@ fun RegisterScreen (navController: NavController){    //This line must be change
                 value = viewModel.confirmPassword,
                 onValueChange = { viewModel.confirmPassword = it }
             )
-            Spacer(modifier = Modifier.height(5.dp))
+            /*Spacer(modifier = Modifier.height(5.dp))
             CheckboxComponent(value = stringResource(id = R.string.terms_and_conditions))
+            Spacer(modifier = Modifier.height(5.dp))*/
 
-            Spacer(modifier = Modifier.height(5.dp))
-            ButtonStartComponent(value = stringResource(id = R.string.sign_up), onClick = {
-                viewModel.handleRegistration()
-                navController.navigate(Screens.HomeScreen.name)
-            })
+            ButtonStartComponent(
+                value = stringResource(id = R.string.sign_up),
+                onClick = {
+                    // Start registreringsprosessen med tillegg av onComplete callback
+                    viewModel.handleRegistrationWithChecks() { onComplete ->
+                        if (onComplete) {
+                            // Når registreringen er vellykket, navigerer vi til hjemmesiden.
+                            navController.navigate(Screens.HomeScreen.name) {
+                                // Fjerner vekk navStack slik at brukere ikke kan gå tilbake til login
+                                popUpTo(navController.graph.startDestinationId) {
+                                    inclusive = true
+                                }
+                                launchSingleTop = true
+                            }
+                        } else {
+                            // Her kan vi hente feilmeldingen fra RegisterViewModel til å vise i TOAST
+                        }
+                    }
+                })
 
             Spacer(modifier = Modifier.height(15.dp))
             DividerTextComponent()

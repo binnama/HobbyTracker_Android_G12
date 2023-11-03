@@ -1,25 +1,34 @@
 package hiof.g12.compose.viewModels
 
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
+import hiof.g12.compose.service.AuthService
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 
-class LoginViewModel : ViewModel() {
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+class LoginViewModel() : ViewModel() {
+
+    private val firebaseAuth = FirebaseAuth.getInstance()
+    private val authService = AuthService(firebaseAuth)
 
     var email = mutableStateOf("")
     var password = mutableStateOf("")
+    var errorMessage by mutableStateOf<String?>(null)
+    init {
+        authService.observeAuthState()
+    }
 
-    fun authenticateWithEmail(onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+    fun loginUser(onComplete: (Boolean) -> Unit) {
         viewModelScope.launch {
-            try{
-                auth.signInWithEmailAndPassword(email.value, password.value).await()
-                onSuccess.invoke()
-            } catch (e: Exception){
-                onFailure.invoke(e)
+            val loginResult = authService.loginUser(email.value, password.value)
+            if (loginResult.isSuccess) {
+                onComplete(true) }
+             else {
+                errorMessage = "Kunne ikke logge inn"
+                onComplete(false)
             }
         }
     }
