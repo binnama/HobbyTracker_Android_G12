@@ -154,6 +154,7 @@ fun MyTextFieldComponent (
         label = { Text(text = labelValue, color = White) },
         value = value,
         colors = TextFieldDefaults.outlinedTextFieldColors(
+            textColor = White,
             focusedBorderColor = White,
             focusedLabelColor = White,
             cursorColor = White,
@@ -180,6 +181,7 @@ fun PasswordTextFieldComponent (
         label = { Text(text = labelValue, color = White) },
         value = value,
         colors = TextFieldDefaults.outlinedTextFieldColors(
+            textColor = White,
             focusedBorderColor = White,
             focusedLabelColor = White,
             cursorColor = White,
