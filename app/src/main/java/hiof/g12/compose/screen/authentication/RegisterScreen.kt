@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -67,12 +68,28 @@ fun RegisterScreen (navController: NavController){    //This line must be change
             )
             Spacer(modifier = Modifier.height(5.dp))
             CheckboxComponent(value = stringResource(id = R.string.terms_and_conditions))
-
             Spacer(modifier = Modifier.height(5.dp))
-            ButtonStartComponent(value = stringResource(id = R.string.sign_up), onClick = {
-                viewModel.handleRegistration()
-                navController.navigate(Screens.HomeScreen.name)
-            })
+            /*ButtonStartComponent(
+                value = stringResource(id = R.string.sign_up),
+                onClick = {
+                    // Start registreringsprosessen med tillegg av onComplete callback
+                    viewModel.handleRegistrationWithChecks(viewModel.username, viewModel.email, viewModel.password) { isSuccessful ->
+                        if (isSuccessful) {
+                            // Når registreringen er vellykket, oppdater registrationComplete til true
+                            viewModel.registrationComplete = true
+                        } else {
+                            // Her kan vi hente feilmeldingen fra RegisterViewModel til å vise i TOAST
+                        }
+                    }
+                }
+            )*/
+
+            // Observerer etter endringer i registrationComplete for navigasjon
+            if (viewModel.registrationComplete) {
+                LaunchedEffect(Unit) {
+                    navController.navigate(Screens.HomeScreen.name)
+                }
+            }
 
             Spacer(modifier = Modifier.height(15.dp))
             DividerTextComponent()

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -64,16 +65,14 @@ fun LoginScreen (navController: NavController) {
             ButtonStartComponent(
                 value = stringResource(id = R.string.login),
                 onClick = {
-                    viewModel.authenticateWithEmail(
-                        onSuccess = {
-                            navController.navigate(Screens.HomeScreen.name)
-                        },
-                        onFailure = {
-                            exception ->
-                            //legg till error handling
-                        }
-                    )
+                    viewModel.loginUser() // Dette vil forsøke å logge inn og oppdatere autentiseringsstatusen
                 })
+
+            if (viewModel.loginSuccess.value) {
+                LaunchedEffect(Unit) {
+                    navController.navigate(Screens.HomeScreen.name)
+                }
+            }
 
             Spacer(modifier = Modifier.height(20.dp))
             DividerTextComponent()

@@ -49,7 +49,7 @@ fun AddHobbyScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(70.dp))
             Button(
                 onClick = {
-                    // Funksjon for å lagre til database
+                    // TODO: funksjon for å lagre til database
                     navController.popBackStack() },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Blue,
