@@ -21,7 +21,7 @@ class FirebaseModule {
 
     val db = Firebase.firestore
 
-    fun isUsernameUnique (collectionPath:String,documentName:String, onSuccess: (exists: Boolean) -> Unit) {
+    fun isUserNameTaken (collectionPath:String,documentName:String, onSuccess: (exists: Boolean) -> Unit) {
         db.collection(collectionPath)
             .document(documentName)
             .get()

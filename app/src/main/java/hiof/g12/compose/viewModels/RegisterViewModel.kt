@@ -24,37 +24,37 @@ class RegisterViewModel : ViewModel() {
     var password by mutableStateOf("")
     var confirmPassword by mutableStateOf("")
     var errorMessage by mutableStateOf<String?>(null)
-    var registrationComplete by mutableStateOf(false)
 
 
-    fun handleRegistrationWithChecks(username: String, email: String, password: String){
+    fun handleRegistrationWithChecks(onComplete: (Boolean) -> Unit){
         if(username.isBlank() || email.isBlank() || password.isBlank() || confirmPassword.isBlank()){
 
-            //Should this be made into a string resource?
             errorMessage = "All fields are required"
+            onComplete(false)
             return
         }
+
         if(password != confirmPassword){
 
             //Should this be made into a string resource?
             errorMessage = "Passwords do not match"
+            onComplete(false)
             return
         }
 
-        firebaseModule.isUsernameUnique("Users",username){ it ->
-            if(it){
-              errorMessage = "Username is already taken"
+        firebaseModule.isUserNameTaken("Users",username){ exists ->
+            if(exists){
+                errorMessage = "Username is already taken"
+                onComplete(false)
             }
             else {
-                addUsernameAndRegisterUser(username, email, password)
+                addUsernameAndRegisterUser(onComplete)
             }
         }
-
-        // Resets errorMessage
         errorMessage = null
     }
 
-    fun registerUser(email:String, password: String, onComplete: (Boolean) -> Unit){
+    fun registerUser(onComplete: (Boolean) -> Unit){
         val auth = FirebaseAuth.getInstance()
 
         auth.createUserWithEmailAndPassword(email, password)
@@ -70,8 +70,8 @@ class RegisterViewModel : ViewModel() {
             }
     }
 
-    fun addUsernameAndRegisterUser(username: String, email: String, password: String) {
-        registerUser(email, password) { isSuccessful ->
+    fun addUsernameAndRegisterUser(onComplete: (Boolean) -> Unit) {
+        registerUser() { isSuccessful ->
             if (isSuccessful) {
                 // Bruk viewModelScope for å starte en coroutine
                 viewModelScope.launch {
@@ -86,19 +86,23 @@ class RegisterViewModel : ViewModel() {
                                 .addOnSuccessListener {
                                     // Håndter vellykket oppretting av dokumentet her.
                                     Log.d("Firestore", "DocumentSnapshot successfully written!")
+                                    onComplete(true)
                                 }
                                 .addOnFailureListener { e ->
                                     Log.w("Firestore", "Error writing document", e)
                                     errorMessage = e.message
+                                    onComplete(false)
                                 }
                         }
                     } else {
                         // Hvis login feiler, sett feilmelding
                         errorMessage = loginResult.exceptionOrNull()?.message ?: "Login failed."
+                        onComplete(false)
                     }
                 }
             } else {
                 // Hvis registrering feiler, vil errorMessage allerede være satt
+                onComplete(false)
             }
         }
     }

@@ -66,30 +66,29 @@ fun RegisterScreen (navController: NavController){    //This line must be change
                 value = viewModel.confirmPassword,
                 onValueChange = { viewModel.confirmPassword = it }
             )
-            Spacer(modifier = Modifier.height(5.dp))
+            /*Spacer(modifier = Modifier.height(5.dp))
             CheckboxComponent(value = stringResource(id = R.string.terms_and_conditions))
-            Spacer(modifier = Modifier.height(5.dp))
-            /*ButtonStartComponent(
+            Spacer(modifier = Modifier.height(5.dp))*/
+
+            ButtonStartComponent(
                 value = stringResource(id = R.string.sign_up),
                 onClick = {
                     // Start registreringsprosessen med tillegg av onComplete callback
-                    viewModel.handleRegistrationWithChecks(viewModel.username, viewModel.email, viewModel.password) { isSuccessful ->
-                        if (isSuccessful) {
-                            // Når registreringen er vellykket, oppdater registrationComplete til true
-                            viewModel.registrationComplete = true
+                    viewModel.handleRegistrationWithChecks() { onComplete ->
+                        if (onComplete) {
+                            // Når registreringen er vellykket, navigerer vi til hjemmesiden.
+                            navController.navigate(Screens.HomeScreen.name) {
+                                // Fjerner vekk navStack slik at brukere ikke kan gå tilbake til login
+                                popUpTo(navController.graph.startDestinationId) {
+                                    inclusive = true
+                                }
+                                launchSingleTop = true
+                            }
                         } else {
                             // Her kan vi hente feilmeldingen fra RegisterViewModel til å vise i TOAST
                         }
                     }
-                }
-            )*/
-
-            // Observerer etter endringer i registrationComplete for navigasjon
-            if (viewModel.registrationComplete) {
-                LaunchedEffect(Unit) {
-                    navController.navigate(Screens.HomeScreen.name)
-                }
-            }
+                })
 
             Spacer(modifier = Modifier.height(15.dp))
             DividerTextComponent()
