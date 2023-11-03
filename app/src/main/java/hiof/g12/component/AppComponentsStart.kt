@@ -6,6 +6,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
@@ -24,16 +26,21 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -49,11 +56,23 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import hiof.g12.R
 import hiof.g12.ui.theme.InputBGColor
 import hiof.g12.ui.theme.Primary
 import hiof.g12.ui.theme.Secondary
 import hiof.g12.ui.theme.White
+import kotlinx.coroutines.tasks.await
+/*
+import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
+ */
 
 @Composable
 fun NormalTextComponent(value: String) {
@@ -135,9 +154,9 @@ fun MyTextFieldComponent (
         label = { Text(text = labelValue, color = White) },
         value = value,
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = Primary,
-            focusedLabelColor = Primary,
-            cursorColor = Primary,
+            focusedBorderColor = White,
+            focusedLabelColor = White,
+            cursorColor = White,
             containerColor = InputBGColor,
         ),
         keyboardOptions = KeyboardOptions.Default,
@@ -161,9 +180,9 @@ fun PasswordTextFieldComponent (
         label = { Text(text = labelValue, color = White) },
         value = value,
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = Primary,
-            focusedLabelColor = Primary,
-            cursorColor = Primary,
+            focusedBorderColor = White,
+            focusedLabelColor = White,
+            cursorColor = White,
             containerColor = InputBGColor,
         ),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
@@ -347,3 +366,68 @@ fun DividerTextComponent() {
         )
     }
 }
+
+// Get username from the DB
+@Composable
+fun UserNameDisplayComponent() {
+    var userName by remember { mutableStateOf("") }
+    val firebaseAuth = FirebaseAuth.getInstance()
+    val database: DatabaseReference = Firebase.database.reference
+
+    val user = firebaseAuth.currentUser
+    val userId = user?.uid
+
+    if (userId != null) {
+        LaunchedEffect(userId) {
+            val userRef = database.child("users").child(userId)
+            val snapshot = userRef.get().await()
+
+            if (snapshot.exists()) {
+                userName = snapshot.child("username").value.toString()
+            }
+        }
+    }
+    else {
+        userName = "User"
+    }
+    Text(text = "$userName")
+}
+
+@Composable
+fun UserPicture(
+    painter: Painter,
+    contentDescription: String?,
+    modifier: Modifier = Modifier,
+) {
+    Image(painter = painter,
+        contentDescription = contentDescription,
+        modifier = modifier.size(60.dp)
+    )
+}
+
+/*
+@Composable
+fun PlaceholderPieChart() {
+    val entries = listOf(
+        PieEntry(45f, "Skole"),
+        PieEntry(10f, "Lese"),
+        PieEntry(20f, "Skrive bok"),
+        PieEntry(15f, "Fest"),
+        PieEntry(15f, "Game"),
+    )
+    val dataSet = PieDataSet(entries, "Ex week")
+
+    // Create and configure the PieChart
+    PieChart(modifier = Modifier
+        .fillMaxSize()
+        .aspectRatio(1f)
+    ) {
+        val data = PieData(dataSet)
+        setData(data)
+
+        setUsePercentValues(true)
+        centerText = "Week 44" // Placeholder text
+        setCenterTextSize(16f)
+    }
+}
+ */
