@@ -28,7 +28,7 @@ fun UserScreen (navController: NavController) {
         modifier = Modifier.fillMaxSize(),
         color = BackGroundColor
     ) {
-        TopBar("UserName")
+        TopBar("UserName", navController)
 
         UserNameDisplayComponent()
         Spacer(modifier = Modifier.height(50.dp))
