@@ -38,7 +38,7 @@ fun AddHobbyScreen(navController: NavController) {
 
     Surface(modifier = Modifier.fillMaxSize(), color = BackGroundColor) {
     Box(modifier = Modifier.fillMaxSize()) {
-        TopBar("Add Hobby")
+        TopBar("Add Hobby", navController)
 
         Column(
             modifier = Modifier.align(Alignment.Center),

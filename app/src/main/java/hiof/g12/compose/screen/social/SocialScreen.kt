@@ -16,7 +16,7 @@ import hiof.g12.ui.theme.BackGroundColor
 fun SocialScreen(navController: NavController) {
     Surface(modifier = Modifier.fillMaxSize(), color = BackGroundColor) {
         Box(modifier = Modifier.fillMaxSize()) {
-            TopBar("Socials")
+            TopBar("Socials", navController)
 
             Column(
                 modifier = Modifier.align(Alignment.Center),
