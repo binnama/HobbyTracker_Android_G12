@@ -16,7 +16,7 @@ import hiof.g12.ui.theme.BackGroundColor
 fun CalendarScreen(navController: NavController) {
     Surface(modifier = Modifier.fillMaxSize(), color = BackGroundColor) {
         Box(modifier = Modifier.fillMaxSize()) {
-            TopBar("Calendar")
+            TopBar("Calendar", navController)
 
             Column(
                 modifier = Modifier.align(Alignment.Center),

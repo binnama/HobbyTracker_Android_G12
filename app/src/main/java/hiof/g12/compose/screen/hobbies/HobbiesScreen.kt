@@ -31,7 +31,7 @@ import hiof.g12.ui.theme.BackGroundColor
 fun HobbiesScreen(navController: NavController) {
     Surface(modifier = Modifier.fillMaxSize(), color = BackGroundColor) {
         Box(modifier = Modifier.fillMaxSize()) {
-            TopBar("Hobbies")
+            TopBar("Hobbies", navController)
 
             Column(
                 modifier = Modifier.align(Alignment.Center),

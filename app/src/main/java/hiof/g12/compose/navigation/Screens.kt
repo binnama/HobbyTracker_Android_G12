@@ -8,8 +8,8 @@ enum class Screens {
     LoginScreen,
     RegisterScreen,
 
-    // NAVIGASJON
-    NavigationScreen,
+    // TOP MENU NAVIGATION
+    MenuScreen,
 
     // HJEM
     HomeScreen,
