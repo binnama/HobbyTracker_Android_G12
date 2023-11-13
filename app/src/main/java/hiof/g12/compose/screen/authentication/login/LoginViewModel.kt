@@ -1,34 +1,58 @@
 package hiof.g12.compose.screen.authentication.login
 
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.auth.FirebaseAuth
-import hiof.g12.compose.service.AuthService
+import dagger.hilt.android.lifecycle.HiltViewModel
+import hiof.g12.R
+import hiof.g12.compose.common.ext.isValidEmail
+import hiof.g12.compose.common.ext.isValidPassword
+import hiof.g12.compose.service.AccountService
 import kotlinx.coroutines.launch
+import java.lang.Exception
+import javax.inject.Inject
 
-class LoginViewModel() : ViewModel() {
+// Denne koden ble hentet av forelesningen under modul: Firebase Authentication
+@HiltViewModel
+class LoginViewModel @Inject constructor(
+    private val accountService: AccountService,
+) : ViewModel() {
 
-    private val firebaseAuth = FirebaseAuth.getInstance()
-    private val authService = AuthService(firebaseAuth)
+    var uiState = mutableStateOf(LoginUiState())
 
-    var email = mutableStateOf("")
-    var password = mutableStateOf("")
-    var errorMessage by mutableStateOf<String?>(null)
-    init {
-        authService.observeAuthState()
+    private val email
+        get() = uiState.value.email
+    private val password
+        get() = uiState.value.password
+
+    fun onEmailChange(newValue: String) {
+        uiState.value = uiState.value.copy(email = newValue)
     }
 
-    fun loginUser(onComplete: (Boolean) -> Unit) {
+    fun onPasswordChange(newValue: String) {
+        uiState.value = uiState.value.copy(password = newValue)
+    }
+
+    fun onLoginClick(loggedIn: () -> Unit) {
+        if (!email.isValidEmail()) {
+            uiState.value = uiState.value.copy(errorMessage = R.string.email_error)
+            return
+        }
+
+        if (!password.isValidPassword()) {
+            uiState.value = uiState.value.copy(errorMessage = R.string.password_error)
+            return
+        }
+
         viewModelScope.launch {
-            val loginResult = authService.loginUser(email.value, password.value)
-            if (loginResult.isSuccess) {
-                onComplete(true) }
-             else {
-                errorMessage = "Kunne ikke logge inn"
-                onComplete(false)
+            try {
+                accountService.authenticate(email, password) { error ->
+                    if (error == null)
+                        loggedIn()
+                }
+            }
+            catch(e: Exception) {
+                uiState.value = uiState.value.copy(errorMessage = R.string.could_not_log_in)
             }
         }
     }
