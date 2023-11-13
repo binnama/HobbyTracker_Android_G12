@@ -17,4 +17,9 @@
     <string name="already_have_an_account_login">Already have an account? Login</string>
     <string name="forgot_password">"Forgot your password?"</string>
     <string name="enter_email">Enter Your Emailadress</string>
+    <string name="email_error">Add a valid email</string>
+    <string name="password_error">Password must have at least six digits including special character</string>
+    <string name="could_not_log_in">Could not log in.</string>
+    <string name="password_match_error">Passwords doesn\'t match</string>
+    <string name="could_not_create_account">Could not create an account</string>
 </resources>
