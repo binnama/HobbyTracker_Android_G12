@@ -10,7 +10,6 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 
-// Utnytter FirebaseAuth biblioteket for å utnytte metoder for å benytte Firebase.
 // Denne koden ble hentet av forelesningen under modul: Firebase Authentication
 
 class AccountServiceImpl @Inject constructor(private val auth: FirebaseAuth) : AccountService {

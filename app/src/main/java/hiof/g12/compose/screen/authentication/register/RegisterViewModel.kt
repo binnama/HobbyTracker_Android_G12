@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import java.lang.Exception
 import javax.inject.Inject
 
+// Denne koden ble hentet av forelesningen under modul: Firebase Authentication
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
     private val accountService: AccountService,

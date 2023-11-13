@@ -10,6 +10,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
+// Denne koden ble hentet av forelesningen under modul: Firebase Authentication
 @Module
 @InstallIn(SingletonComponent::class)
 object FirebaseModule {
