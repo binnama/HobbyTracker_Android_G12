@@ -1,4 +1,4 @@
-package hiof.g12.compose.viewModels
+package hiof.g12.compose.screen.authentication.welcome
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

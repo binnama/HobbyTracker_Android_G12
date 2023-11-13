@@ -1,4 +1,4 @@
-package hiof.g12.compose.viewModels
+package hiof.g12.compose.screen.authentication.register
 
 import android.util.Log
 import androidx.compose.runtime.*

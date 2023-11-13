@@ -1,4 +1,4 @@
-package hiof.g12.compose.viewModels
+package hiof.g12.compose.screen.hobbies
 import androidx.lifecycle.ViewModel
 
 import com.google.firebase.auth.FirebaseAuth

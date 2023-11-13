@@ -25,7 +25,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import hiof.g12.compose.navigation.Screens
-import hiof.g12.ui.theme.BackGroundColor
+import hiof.g12.compose.ui.theme.BackGroundColor
 
 @Composable
 fun HobbiesScreen(navController: NavController) {

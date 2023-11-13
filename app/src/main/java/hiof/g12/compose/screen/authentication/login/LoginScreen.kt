@@ -1,4 +1,4 @@
-package hiof.g12.compose.screen.authentication
+package hiof.g12.compose.screen.authentication.login
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -22,8 +21,7 @@ import hiof.g12.component.MyTextFieldComponent
 import hiof.g12.component.PasswordTextFieldComponent
 import hiof.g12.component.UnderlinedNormalTextComponent
 import hiof.g12.compose.navigation.Screens
-import hiof.g12.compose.viewModels.LoginViewModel
-import hiof.g12.ui.theme.BackGroundColor
+import hiof.g12.compose.ui.theme.BackGroundColor
 
 
 @Composable

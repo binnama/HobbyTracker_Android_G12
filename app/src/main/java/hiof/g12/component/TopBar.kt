@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import hiof.g12.R
 import hiof.g12.compose.navigation.Screens
-import hiof.g12.ui.theme.BackGroundColor
+import hiof.g12.compose.ui.theme.BackGroundColor
 
 // TOPBAR TIL APPEN MED EGENDEFINERT TITTEL
 @OptIn(ExperimentalMaterial3Api::class)

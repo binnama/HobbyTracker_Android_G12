@@ -17,7 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import hiof.g12.R
-import hiof.g12.ui.theme.BackGroundColor
+import hiof.g12.compose.ui.theme.BackGroundColor
 
 // MENU TOP BAR TIL APPEN UTEN TITTEL
 @OptIn(ExperimentalMaterial3Api::class)
