@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import hiof.g12.component.MenuTopBar
 import hiof.g12.compose.navigation.Screens
-import hiof.g12.ui.theme.BackGroundColor
+import hiof.g12.compose.ui.theme.BackGroundColor
 
 @Composable
 fun MenuScreen(navController: NavController) {

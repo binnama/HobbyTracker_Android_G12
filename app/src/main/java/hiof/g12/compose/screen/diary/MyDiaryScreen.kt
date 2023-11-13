@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import hiof.g12.ui.theme.BackGroundColor
+import hiof.g12.compose.ui.theme.BackGroundColor
 
 @Composable
 fun MyDiaryScreen(navController: NavController) {

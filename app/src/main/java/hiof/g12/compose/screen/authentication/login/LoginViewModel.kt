@@ -1,4 +1,4 @@
-package hiof.g12.compose.viewModels
+package hiof.g12.compose.screen.authentication.login
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

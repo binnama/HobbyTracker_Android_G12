@@ -17,11 +17,11 @@ import hiof.g12.compose.screen.hobbies.AddHobbyScreen
 import hiof.g12.compose.screen.calendar.CalendarScreen
 import hiof.g12.compose.screen.hobbies.HobbiesScreen
 import hiof.g12.compose.screen.home.HomeScreen
-import hiof.g12.compose.screen.authentication.LoginScreen
+import hiof.g12.compose.screen.authentication.login.LoginScreen
 import hiof.g12.compose.screen.diary.MyDiaryScreen
-import hiof.g12.compose.screen.authentication.RegisterScreen
+import hiof.g12.compose.screen.authentication.register.RegisterScreen
 import hiof.g12.compose.screen.social.SocialScreen
-import hiof.g12.compose.screen.authentication.WelcomeScreen
+import hiof.g12.compose.screen.authentication.welcome.WelcomeScreen
 import hiof.g12.compose.screen.menu.MenuScreen
 
 
