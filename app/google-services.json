@@ -12,7 +12,20 @@
           "package_name": "hiof.g12"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "861241913574-kh83iqve42l6ghi2odtma2bmrdjf8bn5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "hiof.g12",
+            "certificate_hash": "1e3b29f68cc29f055d5a4ee390fba5109e4f552e"
+          }
+        },
+        {
+          "client_id": "861241913574-dno86epr0pv2tjprgugc5j5etoj1p2jh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBs_qjvxGa4NVRR70RHDPs0j8wAp9gChRk"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "861241913574-dno86epr0pv2tjprgugc5j5etoj1p2jh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

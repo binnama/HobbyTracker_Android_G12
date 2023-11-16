@@ -57,6 +57,7 @@ android {
     }
 }
 
+
 dependencies {
 
     implementation("androidx.core:core-ktx:1.12.0")
@@ -77,6 +78,9 @@ dependencies {
     implementation("com.google.firebase:firebase-storage-ktx:20.3.0")
     implementation("com.google.firebase:firebase-database-ktx:20.3.0")
 
+    implementation(platform("com.google.firebase:firebase-bom:32.5.0"))
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
+
     /*
     //hilt
     implementation("com.google.dagger:hilt-android:2.47")
@@ -96,5 +100,8 @@ dependencies {
     //Navbar
     val nav_version = "2.7.4"
     implementation("androidx.navigation:navigation-compose:$nav_version")
+
+    // Piechart
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
 }
