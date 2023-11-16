@@ -2,8 +2,8 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
-    //id("com.google.devtools.ksp")
-    //id("dagger.hilt.android.plugin")
+    id("com.google.devtools.ksp")
+    id("dagger.hilt.android.plugin")
 
 }
 
@@ -37,18 +37,19 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
     buildFeatures {
         compose = true
     }
-    kotlinOptions {
-        jvmTarget = "1.8"
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.2"
     }
     packaging {
         resources {
@@ -57,12 +58,11 @@ android {
     }
 }
 
-
 dependencies {
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
-    implementation("androidx.activity:activity-compose:1.8.0")
+    implementation("androidx.activity:activity-compose:1.8.1")
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
@@ -78,17 +78,12 @@ dependencies {
     implementation("com.google.firebase:firebase-storage-ktx:20.3.0")
     implementation("com.google.firebase:firebase-database-ktx:20.3.0")
 
-    implementation(platform("com.google.firebase:firebase-bom:32.5.0"))
-    implementation("com.google.android.gms:play-services-auth:20.7.0")
-
-    /*
-    //hilt
+    // Hilt
     implementation("com.google.dagger:hilt-android:2.47")
-    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
-    implementation("com.google.dagger:hilt-compiler:2.47") // ksp?
-    //
+    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
+    ksp("com.google.dagger:hilt-compiler:2.47")
 
-     */
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -100,8 +95,5 @@ dependencies {
     //Navbar
     val nav_version = "2.7.4"
     implementation("androidx.navigation:navigation-compose:$nav_version")
-
-    // Piechart
-    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
 }

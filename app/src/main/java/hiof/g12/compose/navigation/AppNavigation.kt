@@ -17,11 +17,11 @@ import hiof.g12.compose.screen.hobbies.AddHobbyScreen
 import hiof.g12.compose.screen.calendar.CalendarScreen
 import hiof.g12.compose.screen.hobbies.HobbiesScreen
 import hiof.g12.compose.screen.home.HomeScreen
-import hiof.g12.compose.screen.authentication.LoginScreen
+import hiof.g12.compose.screen.authentication.login.LoginScreen
 import hiof.g12.compose.screen.diary.MyDiaryScreen
-import hiof.g12.compose.screen.authentication.RegisterScreen
+import hiof.g12.compose.screen.authentication.register.RegisterScreen
 import hiof.g12.compose.screen.social.SocialScreen
-import hiof.g12.compose.screen.authentication.WelcomeScreen
+import hiof.g12.compose.screen.authentication.welcome.WelcomeScreen
 import hiof.g12.compose.screen.menu.MenuScreen
 
 
@@ -65,10 +65,10 @@ fun AppNavigation() {
                 WelcomeScreen(navController = navController)
             }
             composable(route = Screens.LoginScreen.name) {
-                LoginScreen(navController = navController)
+                LoginScreen(loggedIn = {navController.navigate(Screens.HomeScreen.name)})
             }
             composable(route = Screens.RegisterScreen.name) {
-                RegisterScreen(navController = navController)
+                RegisterScreen(loggedIn = {navController.navigate(Screens.HomeScreen.name)})
             }
             composable(route = Screens.MenuScreen.name) {
                 MenuScreen(navController = navController)

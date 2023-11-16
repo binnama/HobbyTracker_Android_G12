@@ -62,10 +62,10 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import hiof.g12.R
-import hiof.g12.ui.theme.InputBGColor
-import hiof.g12.ui.theme.Primary
-import hiof.g12.ui.theme.Secondary
-import hiof.g12.ui.theme.White
+import hiof.g12.compose.ui.theme.InputBGColor
+import hiof.g12.compose.ui.theme.Primary
+import hiof.g12.compose.ui.theme.Secondary
+import hiof.g12.compose.ui.theme.White
 import kotlinx.coroutines.tasks.await
 /*
 import com.github.mikephil.charting.charts.PieChart
@@ -154,6 +154,7 @@ fun MyTextFieldComponent (
         label = { Text(text = labelValue, color = White) },
         value = value,
         colors = TextFieldDefaults.outlinedTextFieldColors(
+            textColor = White,
             focusedBorderColor = White,
             focusedLabelColor = White,
             cursorColor = White,
@@ -180,6 +181,7 @@ fun PasswordTextFieldComponent (
         label = { Text(text = labelValue, color = White) },
         value = value,
         colors = TextFieldDefaults.outlinedTextFieldColors(
+            textColor = White,
             focusedBorderColor = White,
             focusedLabelColor = White,
             cursorColor = White,

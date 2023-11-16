@@ -1,4 +1,4 @@
-package hiof.g12.compose.viewModels
+package hiof.g12.compose.screen.home
 
 import androidx.lifecycle.ViewModel
 

@@ -5,7 +5,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import hiof.g12.ui.theme.BackGroundColor
+import hiof.g12.compose.ui.theme.BackGroundColor
 import TopBar
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height

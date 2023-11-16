@@ -1,4 +1,4 @@
-package hiof.g12.ui.theme
+package hiof.g12.compose.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
