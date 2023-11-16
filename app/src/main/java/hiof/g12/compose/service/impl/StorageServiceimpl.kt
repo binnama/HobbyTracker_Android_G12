@@ -18,8 +18,7 @@ import javax.inject.Inject
 class StorageServiceImpl
 @Inject
 constructor(private val firestore: FirebaseFirestore,
-            private val auth: AccountService
-) : StorageService {
+            private val auth: AccountService) : StorageService {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override val hobbies: Flow<List<Hobby>>
@@ -36,12 +35,10 @@ constructor(private val firestore: FirebaseFirestore,
         firestore.collection(HOBBY_COLLECTION).document(hobbyId).get().await().toObject()
 
 
-    override suspend fun save(hobby: Hobby): String {
+    override suspend fun saveHobby(hobby: Hobby): String {
         val movieWithUserId = hobby.copy(userId = auth.currentUserId)
         return firestore.collection(HOBBY_COLLECTION).add(movieWithUserId).await().id
     }
-
-
 
     companion object {
         private const val HOBBY_COLLECTION = "hobbies"

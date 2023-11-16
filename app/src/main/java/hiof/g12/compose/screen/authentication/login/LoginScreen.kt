@@ -15,8 +15,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import hiof.g12.R
 import hiof.g12.component.ButtonStartComponent
 import hiof.g12.component.ClickableLoginTextComponent
@@ -25,9 +23,6 @@ import hiof.g12.component.IconStart
 import hiof.g12.component.MyTextFieldComponent
 import hiof.g12.component.PasswordTextFieldComponent
 import hiof.g12.component.UnderlinedNormalTextComponent
-import hiof.g12.compose.navigation.Screens
-import hiof.g12.compose.screen.authentication.register.RegisterViewModel
-import hiof.g12.compose.screen.hobbies.Red
 import hiof.g12.compose.ui.theme.BackGroundColor
 
 @Composable

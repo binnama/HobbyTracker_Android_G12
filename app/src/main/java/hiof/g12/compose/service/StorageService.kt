@@ -9,5 +9,6 @@ interface StorageService {
     // Hobbies Storage
     val hobbies: Flow<List<Hobby>>
     suspend fun getHobby(hobbyId: String): Hobby?
-    suspend fun save(hobby: Hobby): String
+
+    suspend fun saveHobby(hobby: Hobby): String
 }

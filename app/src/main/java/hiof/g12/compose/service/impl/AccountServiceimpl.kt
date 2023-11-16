@@ -12,6 +12,7 @@ import javax.inject.Inject
 
 // Denne koden ble hentet av forelesningen under modul: Firebase Authentication
 
+// Dette er en implementasjon av AccountService interface.
 class AccountServiceImpl @Inject constructor(private val auth: FirebaseAuth) : AccountService {
 
     override val currentUserId: String
@@ -20,7 +21,7 @@ class AccountServiceImpl @Inject constructor(private val auth: FirebaseAuth) : A
     override val hasUser: Boolean
         get() = auth.currentUser != null
 
-    // c
+
     override val currentUser: Flow<User>
         get() = callbackFlow {
             val listener =

@@ -24,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 
 import hiof.g12.compose.ui.theme.BackGroundColor
 
@@ -32,7 +33,7 @@ val Blue = Color(0xFF9BC2CF)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddHobbyScreen(navController: NavController) {
+fun AddHobbyScreen(navController: NavController, viewModel: HobbiesViewModel = hiltViewModel()) {
 
     var hobbyText by remember { mutableStateOf("") }
 
@@ -48,9 +49,8 @@ fun AddHobbyScreen(navController: NavController) {
             TextField(value = hobbyText, onValueChange = {hobbyText = it}, label = { Text(text = "Add hobby title")})
             Spacer(modifier = Modifier.height(70.dp))
             Button(
-                onClick = {
-                    // TODO: funksjon for å lagre til database
-                    navController.popBackStack() },
+                onClick = { viewModel.addHobby(hobbyText)
+                          navController.popBackStack()},
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Blue,
                     contentColor = Color.Black
