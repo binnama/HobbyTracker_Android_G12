@@ -7,5 +7,10 @@ data class Diary (
     @DocumentId
     val uid : String = "",
     val description: String = "",
-    val date: Date = Date(),
-    var userId: String = "")
+    val startDate: Date = Date(),
+    val hobby: Hobby,
+    val stopDate: Date = Date(),
+    val socialMedia: Boolean,
+    var userId: String = "") {
+    constructor() : this("", "", Date(), Hobby(), Date(), false, "")
+}
