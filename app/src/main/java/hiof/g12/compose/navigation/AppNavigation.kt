@@ -22,7 +22,6 @@ import hiof.g12.compose.screen.diary.MyDiaryScreen
 import hiof.g12.compose.screen.authentication.register.RegisterScreen
 import hiof.g12.compose.screen.social.SocialScreen
 import hiof.g12.compose.screen.authentication.welcome.WelcomeScreen
-import hiof.g12.compose.screen.hobbies.AddDiaryScreen
 import hiof.g12.compose.screen.menu.MenuScreen
 import hiof.g12.compose.screen.user.UserScreen
 
@@ -86,9 +85,6 @@ fun AppNavigation() {
             }
             composable(route = Screens.MyDiaryScreen.name) {
                 MyDiaryScreen(navController = navController)
-            }
-            composable(route = Screens.AddDiaryScreen.name) {
-                AddDiaryScreen(navController = navController)
             }
             composable(route = Screens.CalendarScreen.name) {
                 CalendarScreen(navController = navController)

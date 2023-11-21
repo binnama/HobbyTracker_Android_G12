@@ -7,13 +7,9 @@ data class Hobby (
     val uid : String = "",
     val title: String = "",
     val color: String = "",
-    //val timer : HobbyTimer,
     var userId: String = "",
     )
 
-
-data class HobbyTimer (
-    @DocumentId
-    val uid : String = "",
-    val trackerTimer : String = ""
-)
+fun Hobby.toDisplayString(): String {
+    return title
+}

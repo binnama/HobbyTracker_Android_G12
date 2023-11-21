@@ -21,11 +21,10 @@ class DiaryViewModel  @Inject constructor(
 
     val diaries = storageService.diaries
 
-    fun addDiary(diaryDescription: String) {
+    fun addDiary(diaryDescription: String, hobby: Hobby) {
         viewModelScope.launch {
             val currentDate = Calendar.getInstance().time
-            val newDiary = Diary(description = diaryDescription, date = currentDate, userId = accountService.currentUserId)
-
+            val newDiary = Diary(description = diaryDescription, startDate = currentDate, hobby= hobby, userId = accountService.currentUserId)
             storageService.saveDiary(newDiary)
         }
     }
