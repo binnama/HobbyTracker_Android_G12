@@ -28,30 +28,27 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import hiof.g12.compose.screen.diary.DiaryViewModel
 
 import hiof.g12.compose.ui.theme.BackGroundColor
 
-val Red = Color(0xFFFFC8C8)
-val Blue = Color(0xFF9BC2CF)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddHobbyScreen(navController: NavController, viewModel: HobbiesViewModel = hiltViewModel()) {
-    var hobbyText by remember { mutableStateOf("") }
-    var selectedColor by remember { mutableStateOf("Blue") }
+fun AddDiaryScreen(navController: NavController, viewModel: DiaryViewModel = hiltViewModel()) {
+    var diaryDescription by remember { mutableStateOf("") }
 
     Surface(modifier = Modifier.fillMaxSize(), color = BackGroundColor) {
         Box(modifier = Modifier.fillMaxSize()) {
-            TopBar("Add Hobby", navController)
+            TopBar("Add Diary", navController)
 
             Column(
                 modifier = Modifier.align(Alignment.Center),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                TextField(value = hobbyText, onValueChange = { hobbyText = it }, label = { Text(text = "Add hobby title") })
+                TextField(value = diaryDescription, onValueChange = { diaryDescription = it }, label = { Text(text = "Add diary text") })
                 Spacer(modifier = Modifier.height(30.dp))
-                EditableExposedDropdownMenuSample(onColorSelected = { selectedColor = it })
-                Spacer(modifier = Modifier.height(30.dp))
+
                 Button(
                     onClick = {
                         viewModel.addHobby(hobbyText, selectedColor)
@@ -74,52 +71,6 @@ fun AddHobbyScreen(navController: NavController, viewModel: HobbiesViewModel = h
                     modifier = Modifier.widthIn(min = 200.dp)
                 ) {
                     Text(text = "Cancel")
-                }
-            }
-        }
-    }
-}
-
-// Tatt stor del inspirasjon fra denne koden: https://www.composables.com/material3/exposeddropdownmenubox/examples
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun EditableExposedDropdownMenuSample(onColorSelected: (String) -> Unit) {
-    val options = listOf("Red", "Green", "Blue", "Cyan", "Yellow", "Magenta")
-    var expanded by remember { mutableStateOf(false) }
-    var selectedOptionText by remember { mutableStateOf("") }
-
-    ExposedDropdownMenuBox(
-        expanded = expanded,
-        onExpandedChange = { expanded = it },
-    ) {
-        TextField(
-            modifier = Modifier.menuAnchor(),
-            value = selectedOptionText,
-            onValueChange = { selectedOptionText = it },
-            label = { Text("Associated hobby color") },
-            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-            colors = ExposedDropdownMenuDefaults.textFieldColors(),
-        )
-
-        val filteringOptions = options.filter {
-            it.contains(selectedOptionText, ignoreCase = true)
-        }
-
-        if (filteringOptions.isNotEmpty()) {
-            ExposedDropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { expanded = false },
-            ) {
-                filteringOptions.forEach { selectionOption ->
-                    DropdownMenuItem(
-                        text = { Text(selectionOption) },
-                        onClick = {
-                            selectedOptionText = selectionOption
-                            expanded = false
-                            onColorSelected(selectionOption)
-                        },
-                        contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
-                    )
                 }
             }
         }

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -46,6 +47,14 @@ fun HobbiesScreen(navController: NavController, viewModel: HobbiesViewModel = hi
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
+
+                Button(
+                    onClick = { navController.navigate(Screens.AddHobbyScreen.name) },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color.Black), modifier = Modifier.widthIn(min = 300.dp)
+                ) {
+                    Text(text = "Add a new hobby")
+                    Icon(imageVector = Icons.Filled.Add, contentDescription = null)
+                }
                 if (hobbies.isNotEmpty()) {
                     LazyColumn {
                         items(count = hobbies.size) { index ->
@@ -58,21 +67,18 @@ fun HobbiesScreen(navController: NavController, viewModel: HobbiesViewModel = hi
                         color = Color.Gray
                     )
                 }
-
-
-                Button(
-                    onClick = { navController.navigate(Screens.AddHobbyScreen.name) },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color.Black)
-                ) {
-                    Text(text = "Add a new hobby")
-                    Icon(imageVector = Icons.Filled.Add, contentDescription = null)
-                }
             }
         }
     }
 }
 
+
 @Composable
 fun HobbyItem(hobby: Hobby) {
-    Text(text = hobby.title, color = Color.White)
+
+    //parseColor fra https://developermemos.com/posts/using-hex-colors-compose
+    val color = Color(android.graphics.Color.parseColor(hobby.color))
+    Button(onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(containerColor = color, contentColor = Color.White), modifier = Modifier.widthIn(min = 300.dp)) {
+        Text(text = hobby.title)
+    }
 }

@@ -85,6 +85,9 @@ fun AppNavigation() {
             composable(route = Screens.MyDiaryScreen.name) {
                 MyDiaryScreen(navController = navController)
             }
+            composable(route = Screens.AddDiaryScreen.name) {
+                AddDiary
+            }
             composable(route = Screens.CalendarScreen.name) {
                 CalendarScreen(navController = navController)
             }
