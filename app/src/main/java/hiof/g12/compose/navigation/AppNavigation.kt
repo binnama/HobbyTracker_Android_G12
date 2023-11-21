@@ -23,6 +23,7 @@ import hiof.g12.compose.screen.authentication.register.RegisterScreen
 import hiof.g12.compose.screen.social.SocialScreen
 import hiof.g12.compose.screen.authentication.welcome.WelcomeScreen
 import hiof.g12.compose.screen.menu.MenuScreen
+import hiof.g12.compose.screen.user.UserScreen
 
 
 // Returnerer false hvis bruker er på noen av disse sidene. Denne brukes for å vise bottom navbar.
@@ -90,6 +91,9 @@ fun AppNavigation() {
             }
             composable(route = Screens.SocialScreen.name) {
                 SocialScreen(navController = navController)
+            }
+            composable(route = Screens.UserScreen.name) {
+                UserScreen(navController = navController)
             }
         }
     }

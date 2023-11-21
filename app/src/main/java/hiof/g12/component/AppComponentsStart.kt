@@ -1,5 +1,6 @@
 package hiof.g12.component
 
+import android.os.CountDownTimer
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -17,27 +18,35 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Divider
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
@@ -56,16 +65,16 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import hiof.g12.R
-import hiof.g12.compose.ui.theme.InputBGColor
-import hiof.g12.compose.ui.theme.Primary
-import hiof.g12.compose.ui.theme.Secondary
-import hiof.g12.compose.ui.theme.White
+import hiof.g12.compose.model.Hobby
+import hiof.g12.compose.screen.hobbies.HobbiesViewModel
+import hiof.g12.compose.ui.theme.*
 import kotlinx.coroutines.tasks.await
 /*
 import com.github.mikephil.charting.charts.PieChart
@@ -213,7 +222,8 @@ fun PasswordTextFieldComponent (
 }
 
 @Composable
-fun ButtonStartComponent (value: String, onClick: () -> Unit, isEnabled : Boolean = true) {
+fun ButtonStartComponent (value: String,  onClick: () -> Unit, isEnabled : Boolean = true) {
+
     Button(onClick = onClick,
         modifier = Modifier
             //.fillMaxWidth()
@@ -433,3 +443,68 @@ fun PlaceholderPieChart() {
     }
 }
  */
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun HobbyDropDownMenuComponent() {
+
+    var dExpanded by remember { mutableStateOf(false) }
+    val hobbiesList = listOf("Running", "Chess", "Gaming", "Writing")
+    //val hobbies by viewModel.hobbies.collectAsState(emptyList())
+    //val listHobbies = hobbies.toList()
+    var dSelectedText by remember { mutableStateOf(hobbiesList[0]) }
+
+    ExposedDropdownMenuBox(
+        expanded = dExpanded,
+        onExpandedChange = { dExpanded = !dExpanded }
+    ) {
+        TextField(
+            modifier = Modifier.menuAnchor(),
+            readOnly = true,
+            value = dSelectedText,
+            onValueChange = {},
+            label = { Text("Hobbies") },
+            trailingIcon = {
+                ExposedDropdownMenuDefaults.TrailingIcon(expanded = dExpanded) },
+            colors = ExposedDropdownMenuDefaults.textFieldColors(),
+        )
+
+        ExposedDropdownMenu(
+            expanded = dExpanded,
+            onDismissRequest = { dExpanded = false }
+        ) {
+            hobbiesList.forEach { dSelectionOption ->
+                DropdownMenuItem(
+                    text = { Text(dSelectionOption) },
+                    onClick = {
+                        dSelectedText = dSelectionOption
+                        dExpanded = false
+                    }
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun TimerComponent() {
+
+    var isRunning by remember { mutableStateOf(false) }
+    val timePassed: Long = 0
+    var elapsedSecs by remember { mutableStateOf(timePassed) }
+    var timer: CountDownTimer? by remember { mutableStateOf(null) }
+
+    /*
+    LaunchedEffect(hobbyTitle) {
+        viewModel.savedTrackedTime(userId, hobbyTitle)
+    }
+     */
+
+    Button(onClick = {}) {
+        if (isRunning) {
+            timer?.cancel()
+
+        }
+    }
+
+}

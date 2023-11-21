@@ -11,4 +11,8 @@ interface StorageService {
     suspend fun getHobby(hobbyId: String): Hobby?
 
     suspend fun saveHobby(hobby: Hobby): String
+
+    // Time storage
+    //suspend fun
 }
+

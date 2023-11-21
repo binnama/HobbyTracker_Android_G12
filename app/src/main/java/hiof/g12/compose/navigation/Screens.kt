@@ -14,6 +14,9 @@ enum class Screens {
     // HJEM
     HomeScreen,
 
+    //USER
+    UserScreen,
+
     // HOBBIES
     HobbiesScreen,
     AddHobbyScreen,

@@ -6,4 +6,13 @@ data class Hobby (
     @DocumentId
     val uid : String = "",
     val title: String = "",
-    var userId: String = "")
+    val timer : HobbyTimer,
+    var userId: String = "",
+
+    )
+
+data class HobbyTimer (
+    @DocumentId
+    val uid : String = "",
+    val trackerTimer : String = ""
+)
