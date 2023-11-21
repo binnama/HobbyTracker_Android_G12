@@ -67,7 +67,7 @@ constructor(private val firestore: FirebaseFirestore,
 
     companion object {
         private const val HOBBY_COLLECTION = "hobbies"
-        private const val DIARY_COLLLECTION = "diary"
+        private const val DIARY_COLLLECTION = "diaries"
         private const val USER_ID_FIELD = "userId"
     }
 }

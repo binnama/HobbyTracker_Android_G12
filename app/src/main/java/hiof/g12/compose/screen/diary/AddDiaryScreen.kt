@@ -4,12 +4,15 @@ import TopBar
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -36,6 +39,7 @@ import hiof.g12.compose.ui.theme.BackGroundColor
 @Composable
 fun AddDiaryScreen(navController: NavController, viewModel: DiaryViewModel = hiltViewModel()) {
     var diaryDescription by remember { mutableStateOf("") }
+    val shareToSocial = remember { mutableStateOf(false) }
 
     Surface(modifier = Modifier.fillMaxSize(), color = BackGroundColor) {
         Box(modifier = Modifier.fillMaxSize()) {
@@ -49,9 +53,18 @@ fun AddDiaryScreen(navController: NavController, viewModel: DiaryViewModel = hil
                 TextField(value = diaryDescription, onValueChange = { diaryDescription = it }, label = { Text(text = "Add diary text") })
                 Spacer(modifier = Modifier.height(30.dp))
 
+                Row {
+                    Checkbox(
+                        checked = shareToSocial.value,
+                        modifier = Modifier.padding(16.dp),
+                        onCheckedChange = { isChecked -> shareToSocial.value = isChecked },
+                    )
+                    Text("Add to social media", color = Color.White)
+                }
+
                 Button(
                     onClick = {
-                        viewModel.addHobby(hobbyText, selectedColor)
+                        viewModel.addDiary(diaryDescription)
                         navController.popBackStack()
                     },
                     colors = ButtonDefaults.buttonColors(

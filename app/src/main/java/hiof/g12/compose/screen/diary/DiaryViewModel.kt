@@ -1,9 +1,16 @@
 package hiof.g12.compose.screen.diary
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.google.type.DateTime
 import dagger.hilt.android.lifecycle.HiltViewModel
+import hiof.g12.compose.model.Diary
+import hiof.g12.compose.model.Hobby
 import hiof.g12.compose.service.AccountService
 import hiof.g12.compose.service.StorageService
+import kotlinx.coroutines.launch
+import java.util.Calendar
+import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
@@ -12,5 +19,14 @@ class DiaryViewModel  @Inject constructor(
     private val accountService: AccountService
 ) : ViewModel() {
 
-    val diaries = storageService
+    val diaries = storageService.diaries
+
+    fun addDiary(diaryDescription: String) {
+        viewModelScope.launch {
+            val currentDate = Calendar.getInstance().time
+            val newDiary = Diary(description = diaryDescription, date = currentDate, userId = accountService.currentUserId)
+
+            storageService.saveDiary(newDiary)
+        }
+    }
 }
