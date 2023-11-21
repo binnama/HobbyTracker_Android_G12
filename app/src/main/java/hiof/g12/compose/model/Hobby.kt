@@ -6,10 +6,11 @@ data class Hobby (
     @DocumentId
     val uid : String = "",
     val title: String = "",
-    val timer : HobbyTimer,
+    val color: String = "",
+    //val timer : HobbyTimer,
     var userId: String = "",
-
     )
+
 
 data class HobbyTimer (
     @DocumentId

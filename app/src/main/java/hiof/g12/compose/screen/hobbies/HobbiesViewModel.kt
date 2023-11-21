@@ -7,7 +7,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import hiof.g12.compose.model.Hobby
-import hiof.g12.compose.model.HobbyTimer
+import hiof.g12.compose.screen.home.HobbyTimer
 import hiof.g12.compose.service.AccountService
 import hiof.g12.compose.service.StorageService
 import kotlinx.coroutines.launch
@@ -19,20 +19,20 @@ class HobbiesViewModel @Inject constructor(
     private val accountService: AccountService
 ) : ViewModel() {
 
-    // TimeTracker
-    private val db = Firebase.firestore
-    val hobbyTimes: MutableState<List<hiof.g12.compose.screen.home.HobbyTimer>> = mutableStateOf(emptyList())
-
     val hobbies = storageService.hobbies
 
-    fun addHobby(hobbyTitle: String) {
+    fun addHobby(hobbyTitle: String, hobbyColor: String) {
         viewModelScope.launch {
-            val newHobby = Hobby(title = hobbyTitle, timer = HobbyTimer(), userId = accountService.currentUserId)
+            val newHobby = Hobby(title = hobbyTitle, color= hobbyColor, userId = accountService.currentUserId)
 
             storageService.saveHobby(newHobby)
         }
     }
 
+
+    // TimeTracker
+    private val db = Firebase.firestore
+    val hobbyTimes: MutableState<List<HobbyTimer>> = mutableStateOf(emptyList())
     fun savedTrackedTime(userId: String, hobbyTitle: String) {
         db.collection("hobbies")
             .whereEqualTo("userId", userId)
