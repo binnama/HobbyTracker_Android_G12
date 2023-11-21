@@ -16,9 +16,9 @@ class HobbiesViewModel @Inject constructor(
 
     val hobbies = storageService.hobbies
 
-    fun addHobby(hobbyTitle: String) {
+    fun addHobby(hobbyTitle: String, hobbyColor: String) {
         viewModelScope.launch {
-            val newHobby = Hobby(title = hobbyTitle, userId = accountService.currentUserId)
+            val newHobby = Hobby(title = hobbyTitle, color= hobbyColor, userId = accountService.currentUserId)
 
             storageService.saveHobby(newHobby)
         }

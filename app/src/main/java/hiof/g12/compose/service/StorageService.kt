@@ -1,4 +1,5 @@
 package hiof.g12.compose.service
+import hiof.g12.compose.model.Diary
 import hiof.g12.compose.model.Hobby
 
 import kotlinx.coroutines.flow.Flow
@@ -11,4 +12,11 @@ interface StorageService {
     suspend fun getHobby(hobbyId: String): Hobby?
 
     suspend fun saveHobby(hobby: Hobby): String
+
+    // Diary Storage
+    val diaries: Flow<List<Diary>>
+
+    suspend fun getDiary(diaryId: String): Diary?
+
+    suspend fun saveDiary(diary: Diary): String
 }

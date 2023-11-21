@@ -25,5 +25,6 @@ enum class Screens {
     SocialScreen,
 
     // LOGGBOK
-    MyDiaryScreen
+    MyDiaryScreen,
+    AddDiaryScreen
 }

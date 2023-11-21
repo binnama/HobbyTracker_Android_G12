@@ -4,6 +4,7 @@ import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.dataObjects
 import com.google.firebase.firestore.ktx.toObject
+import hiof.g12.compose.model.Diary
 import hiof.g12.compose.model.Hobby
 import hiof.g12.compose.service.AccountService
 import hiof.g12.compose.service.StorageService
@@ -20,6 +21,8 @@ class StorageServiceImpl
 constructor(private val firestore: FirebaseFirestore,
             private val auth: AccountService) : StorageService {
 
+
+    // HOBBIES
     @OptIn(ExperimentalCoroutinesApi::class)
     override val hobbies: Flow<List<Hobby>>
         get() = auth.currentUser.flatMapLatest { user ->
@@ -40,8 +43,31 @@ constructor(private val firestore: FirebaseFirestore,
         return firestore.collection(HOBBY_COLLECTION).add(movieWithUserId).await().id
     }
 
+    // DIARY
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    override val diaries: Flow<List<Diary>>
+        get() = auth.currentUser.flatMapLatest { user ->
+            firestore.collection(DIARY_COLLLECTION)
+                .where(
+                    Filter.or(
+                        Filter.equalTo(USER_ID_FIELD, user.id),
+                        Filter.equalTo(USER_ID_FIELD, "")))
+                .dataObjects()
+        }
+
+    override suspend fun getDiary(diaryId: String): Diary? =
+        firestore.collection(DIARY_COLLLECTION).document(diaryId).get().await().toObject()
+
+
+    override suspend fun saveDiary(diary: Diary): String {
+        val diaryWithUserId = diary.copy(userId = auth.currentUserId)
+        return firestore.collection(DIARY_COLLLECTION).add(diaryWithUserId).await().id
+    }
+
     companion object {
         private const val HOBBY_COLLECTION = "hobbies"
+        private const val DIARY_COLLLECTION = "diaries"
         private const val USER_ID_FIELD = "userId"
     }
 }
