@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
@@ -74,6 +75,7 @@ import com.google.firebase.ktx.Firebase
 import hiof.g12.R
 import hiof.g12.compose.model.Hobby
 import hiof.g12.compose.screen.hobbies.HobbiesViewModel
+import hiof.g12.compose.screen.hobbies.HobbyItem
 import hiof.g12.compose.ui.theme.*
 import kotlinx.coroutines.tasks.await
 /*
@@ -449,6 +451,7 @@ fun PlaceholderPieChart() {
 fun HobbyDropDownMenuComponent() {
 
     var dExpanded by remember { mutableStateOf(false) }
+    //val listOfHobbies
     val hobbiesList = listOf("Running", "Chess", "Gaming", "Writing")
     //val hobbies by viewModel.hobbies.collectAsState(emptyList())
     //val listHobbies = hobbies.toList()
@@ -486,6 +489,8 @@ fun HobbyDropDownMenuComponent() {
     }
 }
 
+// Bedre med start-time til db
+// Ved stopp sendes end-time til db
 @Composable
 fun TimerComponent() {
 
