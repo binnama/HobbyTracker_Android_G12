@@ -31,7 +31,7 @@ import hiof.g12.R
 import hiof.g12.component.UserNameDisplayComponent
 import hiof.g12.component.UserPicture
 import hiof.g12.compose.model.Diary
-import hiof.g12.compose.screen.diary.DiaryViewModel
+import hiof.g12.compose.screen.diary.mydiary.DiaryViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
