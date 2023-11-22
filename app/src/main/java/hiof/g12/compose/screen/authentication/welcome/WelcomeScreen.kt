@@ -30,7 +30,7 @@ fun WelcomeScreen (navController: NavController) {
         color = BackGroundColor,
         modifier = Modifier
             .fillMaxSize()
-            //.padding(28.dp)
+        //.padding(28.dp)
     ) {
         Column (
             modifier = Modifier.fillMaxSize(),
@@ -42,7 +42,8 @@ fun WelcomeScreen (navController: NavController) {
             HeaderTextComponent(value = stringResource(id = R.string.welcome))
             Spacer(modifier = Modifier.height(70.dp))
 
-            ButtonStartComponent(value = stringResource(id = R.string.login), onClick = {navController.navigate(Screens.LoginScreen.name)})
+            ButtonStartComponent(value = stringResource(id = R.string.login),
+                onClick = {navController.navigate(Screens.LoginScreen.name)})
             Spacer(modifier = Modifier.height(130.dp))
             ButtonStartComponent(value = stringResource(id = R.string.sign_up), onClick = {navController.navigate(Screens.RegisterScreen.name)})
 
@@ -61,11 +62,3 @@ fun WelcomeScreen (navController: NavController) {
         }
     }
 }
-
-/*
-@Preview(showBackground = true)
-@Composable
-fun WelcomePreview() {
-    WelcomeScreen()
-}
- */

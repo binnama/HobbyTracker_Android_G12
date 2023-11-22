@@ -3,6 +3,8 @@ import hiof.g12.compose.model.Diary
 import hiof.g12.compose.model.Hobby
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import java.util.Objects
 
 // Denne koden ble hentet av forelesningen under modul: Firebase Authentication
 interface StorageService {
@@ -15,6 +17,10 @@ interface StorageService {
 
     // Diary Storage
     val diaries: Flow<List<Diary>>
+
+    suspend fun getActiveActivity(userId: String): Diary?
+
+    suspend fun stopActiveActivity(diaryId: String)
 
     suspend fun getDiary(diaryId: String): Diary?
 

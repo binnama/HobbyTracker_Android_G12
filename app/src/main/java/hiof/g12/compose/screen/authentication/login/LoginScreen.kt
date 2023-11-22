@@ -83,10 +83,3 @@ fun LoginScreen  (loggedIn: () -> Unit,
         }
     }
 }
-/*
-@Preview(showBackground = true)
-@Composable
-fun LoginPreview() {
-    LoginScreen()
-}
-*/

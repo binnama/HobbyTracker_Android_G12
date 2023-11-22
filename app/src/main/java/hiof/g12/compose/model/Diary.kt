@@ -9,8 +9,9 @@ data class Diary (
     val description: String = "",
     val startDate: Date = Date(),
     val hobby: Hobby,
-    val stopDate: Date = Date(),
-    val socialMedia: Boolean,
-    var userId: String = "") {
-    constructor() : this("", "", Date(), Hobby(), Date(), false, "")
+    val stopDate: Date? = null,
+    val socialMedia: Boolean? = null,
+    var userId: String = ""
+) {
+    constructor() : this("", "", Date(), Hobby(), null, null, "")
 }

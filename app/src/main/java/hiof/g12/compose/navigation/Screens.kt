@@ -14,6 +14,9 @@ enum class Screens {
     // HJEM
     HomeScreen,
 
+    //USER
+    UserScreen,
+
     // HOBBIES
     HobbiesScreen,
     AddHobbyScreen,
@@ -26,5 +29,4 @@ enum class Screens {
 
     // LOGGBOK
     MyDiaryScreen,
-    AddDiaryScreen
 }

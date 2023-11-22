@@ -47,7 +47,6 @@ fun HobbiesScreen(navController: NavController, viewModel: HobbiesViewModel = hi
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-
                 Button(
                     onClick = { navController.navigate(Screens.AddHobbyScreen.name) },
                     colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color.Black), modifier = Modifier.widthIn(min = 300.dp)
@@ -71,7 +70,6 @@ fun HobbiesScreen(navController: NavController, viewModel: HobbiesViewModel = hi
         }
     }
 }
-
 
 @Composable
 fun HobbyItem(hobby: Hobby) {

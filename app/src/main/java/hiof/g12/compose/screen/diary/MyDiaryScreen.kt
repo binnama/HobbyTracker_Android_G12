@@ -5,6 +5,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,6 +18,8 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -88,17 +91,6 @@ fun MyDiaryScreen(navController: NavController, viewModel: DiaryViewModel = hilt
                         color = Color.Gray
                     )
                 }
-
-                Button(
-
-                    onClick = { navController.navigate(Screens.AddDiaryScreen.name) },
-                    colors = ButtonDefaults.buttonColors(containerColor = ButtonColorBlue, contentColor = Color.White),   modifier = Modifier
-                        .widthIn(min = 300.dp)
-                        .heightIn(48.dp)
-                ) {
-                    Text(text = "Add journey", fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold,)
-                }
             }
         }
     }
@@ -106,7 +98,7 @@ fun MyDiaryScreen(navController: NavController, viewModel: DiaryViewModel = hilt
 
 @Composable
 fun DiaryItem(diary: Diary) {
-    val formattedDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(diary.date)
+    val formattedDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(diary.startDate)
     OutlinedCard(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface,
@@ -115,13 +107,26 @@ fun DiaryItem(diary: Diary) {
         modifier = Modifier
             .size(width = 240.dp, height = 200.dp)
     ) {
-        Text(
-            text = formattedDate,
-            modifier = Modifier
-                .padding(16.dp),
-            textAlign = TextAlign.Center,
-            style = TextStyle(fontWeight = FontWeight.Bold)
-        )
+        Column {
+            Row {
+                Text(
+                    text = formattedDate,
+                    modifier = Modifier
+                        .padding(16.dp),
+                    textAlign = TextAlign.Center,
+                    style = TextStyle(fontWeight = FontWeight.Bold)
+                )
+                Button(onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Transparent,
+                    contentColor = Color.Red
+                )) {
+                    Icon(imageVector = Icons.Filled.Delete, contentDescription = null)
+                }
+                if(diary.socialMedia == true) {
+                    Icon(imageVector = Icons.Filled.Check, contentDescription = null)
+                }
+            }
+        }
         Text(
             text = diary.description,
             modifier = Modifier
