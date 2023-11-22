@@ -1,4 +1,4 @@
-package hiof.g12.compose.screen.diary
+package hiof.g12.compose.screen.diary.mydiary
 
 import TopBar
 import android.widget.Toast
