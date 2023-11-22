@@ -50,9 +50,13 @@ class DiaryViewModel  @Inject constructor(
         }
     }
 
-    fun stopActivity() {
-
+    fun stopActivity(diaryId: String) {
+        viewModelScope.launch {
+            storageService.stopActiveActivity(diaryId)
+            fetchActiveDiary()
+        }
     }
+
     fun addDiary(diaryDescription: String, hobby: Hobby) {
         viewModelScope.launch {
             val currentDate = Calendar.getInstance().time

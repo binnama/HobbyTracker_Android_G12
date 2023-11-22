@@ -57,7 +57,6 @@ fun HomeScreen(
 
     val activeDiaryState = viewModel.activeDiary.collectAsState()
 
-    // Access the value using .value
     val activeDiary = activeDiaryState.value
 
     Surface(modifier = Modifier.fillMaxSize(), color = BackGroundColor) {
@@ -109,7 +108,7 @@ fun ActiveActivity(activeDiary: Diary, viewModel: DiaryViewModel = hiltViewModel
             Spacer(modifier = Modifier.height(30.dp))
 
             Button(
-                onClick = { },
+                onClick = { viewModel.stopActivity(activeDiary.uid)},
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Red,
                     contentColor = Color.White
@@ -122,9 +121,6 @@ fun ActiveActivity(activeDiary: Diary, viewModel: DiaryViewModel = hiltViewModel
                     fontWeight = FontWeight.Bold,
                 )
             }
-
-
-
 
 }
 
