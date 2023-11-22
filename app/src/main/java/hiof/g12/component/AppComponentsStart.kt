@@ -415,7 +415,8 @@ fun UserPicture(
 ) {
     Image(painter = painter,
         contentDescription = contentDescription,
-        modifier = modifier.size(60.dp)
+        modifier = modifier
+            .size(60.dp),
     )
 }
 
