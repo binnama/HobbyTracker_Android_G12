@@ -10,6 +10,7 @@ import hiof.g12.compose.service.AccountService
 import hiof.g12.compose.service.StorageService
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -56,6 +57,17 @@ constructor(private val firestore: FirebaseFirestore,
                 .dataObjects()
         }
 
+    override suspend fun getActiveActivity(userId: String): Diary? {
+        return firestore.collection(DIARY_COLLLECTION)
+            .whereEqualTo(USER_ID_FIELD, userId)
+            .whereEqualTo(STOP_DATE, null)
+            .get()
+            .await()
+            .toObjects(Diary::class.java)
+            .firstOrNull()
+    }
+
+
     override suspend fun getDiary(diaryId: String): Diary? =
         firestore.collection(DIARY_COLLLECTION).document(diaryId).get().await().toObject()
 
@@ -69,5 +81,6 @@ constructor(private val firestore: FirebaseFirestore,
         private const val HOBBY_COLLECTION = "hobbies"
         private const val DIARY_COLLLECTION = "diaries"
         private const val USER_ID_FIELD = "userId"
+        private const val STOP_DATE = "stopDate"
     }
 }

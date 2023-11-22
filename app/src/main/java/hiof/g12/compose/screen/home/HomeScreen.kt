@@ -44,12 +44,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import hiof.g12.component.HobbyDropDownMenuComponent
 import hiof.g12.component.TimerComponent
+import hiof.g12.compose.model.Diary
 import hiof.g12.compose.ui.theme.BackGroundColor
 import hiof.g12.compose.model.Hobby
 import hiof.g12.compose.navigation.Screens
 import hiof.g12.compose.screen.diary.DiaryViewModel
 import hiof.g12.compose.screen.hobbies.HobbiesViewModel
 import hiof.g12.compose.ui.theme.ButtonColorBlue
+import kotlinx.coroutines.flow.emptyFlow
 import java.util.Objects
 import java.util.Timer
 
@@ -59,9 +61,7 @@ fun HomeScreen(
     navController: NavController, viewModel: DiaryViewModel = hiltViewModel()
 ) {
 
-    var activityText by remember { mutableStateOf("") }
-
-    var selectedHobby by remember { mutableStateOf<Hobby?>(null) }
+    val activeActivity by viewModel.activeActivity
 
     Surface(modifier = Modifier.fillMaxSize(), color = BackGroundColor) {
         Box(modifier = Modifier.fillMaxSize()) {
@@ -73,31 +73,51 @@ fun HomeScreen(
                 verticalArrangement = Arrangement.Center
             ) {
 
-                // Innhold her
-
-                TextField(value = activityText, onValueChange = {activityText = it})
-                Spacer(modifier = Modifier.height(30.dp))
-                HobbyDropDownMenu(onHobbySelected = { selectedHobby = it })
-                Spacer(modifier = Modifier.height(30.dp))
-
-                if (selectedHobby != null) {
-
-                    Button(
-                        onClick = { viewModel.addDiary(activityText, selectedHobby!!)},
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = ButtonColorBlue,
-                            contentColor = Color.White
-                        ), modifier = Modifier
-                            .widthIn(min = 300.dp)
-                            .heightIn(48.dp)
-                    ) {
-                        Text(
-                            text = "Start", fontSize = 24.sp,
-                            fontWeight = FontWeight.Bold,
-                        )
-                    }
+                if(activeActivity == null) {
+                    InActiveActivity()
+                } else if(activeActivity == Diary()) {
+                    ActiveActivity()
                 }
+
             }
+        }
+    }
+}
+
+@Composable
+fun ActiveActivity() {
+
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun InActiveActivity(viewModel: DiaryViewModel = hiltViewModel()) {
+
+    var activityText by remember { mutableStateOf("") }
+
+    var selectedHobby by remember { mutableStateOf<Hobby?>(null) }
+
+
+    TextField(value = activityText, onValueChange = {activityText = it})
+    Spacer(modifier = Modifier.height(30.dp))
+    HobbyDropDownMenu(onHobbySelected = { selectedHobby = it })
+    Spacer(modifier = Modifier.height(30.dp))
+
+    if (selectedHobby != null) {
+
+        Button(
+            onClick = { viewModel.addDiary(activityText, selectedHobby!!)},
+            colors = ButtonDefaults.buttonColors(
+                containerColor = ButtonColorBlue,
+                contentColor = Color.White
+            ), modifier = Modifier
+                .widthIn(min = 300.dp)
+                .heightIn(48.dp)
+        ) {
+            Text(
+                text = "Start", fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+            )
         }
     }
 }

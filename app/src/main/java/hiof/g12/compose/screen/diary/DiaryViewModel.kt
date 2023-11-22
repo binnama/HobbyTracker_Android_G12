@@ -1,5 +1,8 @@
 package hiof.g12.compose.screen.diary
 
+import android.nfc.Tag
+import android.util.Log
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.type.DateTime
@@ -20,6 +23,16 @@ class DiaryViewModel  @Inject constructor(
 ) : ViewModel() {
 
     val diaries = storageService.diaries
+    val activeActivity = mutableStateOf(Diary())
+
+    fun findActivity() {
+        viewModelScope.launch {
+            storageService.getActiveActivity(userId = accountService.currentUserId)?.let {
+                activeActivity.value = it
+            }
+        }
+    }
+
 
     fun addDiary(diaryDescription: String, hobby: Hobby) {
         viewModelScope.launch {
