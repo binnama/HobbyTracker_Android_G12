@@ -1,6 +1,7 @@
 package hiof.g12.compose.screen.home
 
 import TopBar
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -33,6 +34,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -83,8 +85,9 @@ fun HomeScreen(
 
 @Composable
 fun ActiveActivity(activeDiary: Diary, viewModel: DiaryViewModel = hiltViewModel()) {
+    val context = LocalContext.current
 
-            Text(
+    Text(
                 text = "PÅGÅENDE AKTIVITET",
                 modifier = Modifier
                     .padding(16.dp),
@@ -108,7 +111,9 @@ fun ActiveActivity(activeDiary: Diary, viewModel: DiaryViewModel = hiltViewModel
             Spacer(modifier = Modifier.height(30.dp))
 
             Button(
-                onClick = { viewModel.stopActivity(activeDiary.uid)},
+                onClick = { viewModel.stopActivity(activeDiary.uid)
+                    Toast.makeText(context, "Avsluttet en aktivitet", Toast.LENGTH_SHORT).show()
+                },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Red,
                     contentColor = Color.White
@@ -132,6 +137,9 @@ fun InActiveActivity(viewModel: DiaryViewModel = hiltViewModel()) {
 
     var selectedHobby by remember { mutableStateOf<Hobby?>(null) }
 
+    val context = LocalContext.current
+
+
 
     TextField(value = activityText, onValueChange = {activityText = it})
     Spacer(modifier = Modifier.height(30.dp))
@@ -141,7 +149,9 @@ fun InActiveActivity(viewModel: DiaryViewModel = hiltViewModel()) {
     if (selectedHobby != null) {
 
         Button(
-            onClick = { viewModel.addDiary(activityText, selectedHobby!!)},
+            onClick = { viewModel.addDiary(activityText, selectedHobby!!)
+                Toast.makeText(context, "Startet en aktivitet", Toast.LENGTH_SHORT).show()
+            },
             colors = ButtonDefaults.buttonColors(
                 containerColor = ButtonColorBlue,
                 contentColor = Color.White

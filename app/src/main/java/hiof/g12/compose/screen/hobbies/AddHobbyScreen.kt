@@ -1,6 +1,7 @@
 package hiof.g12.compose.screen.hobbies
 
 import TopBar
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,6 +27,7 @@ import androidx.navigation.NavController
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 
@@ -38,7 +40,7 @@ val Blue = Color(0xFF9BC2CF)
 fun AddHobbyScreen(navController: NavController, viewModel: HobbiesViewModel = hiltViewModel()) {
     var hobbyText by remember { mutableStateOf("") }
     var selectedColor by remember { mutableStateOf("Blue") }
-
+    val context = LocalContext.current
     Surface(modifier = Modifier.fillMaxSize(), color = BackGroundColor) {
         Box(modifier = Modifier.fillMaxSize()) {
             TopBar("Add Hobby", navController)
@@ -56,6 +58,7 @@ fun AddHobbyScreen(navController: NavController, viewModel: HobbiesViewModel = h
                     onClick = {
                         viewModel.addHobby(hobbyText, selectedColor)
                         navController.popBackStack()
+                        Toast.makeText(context, "Hobby $hobbyText ble lagt til", Toast.LENGTH_SHORT).show()
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Blue,
