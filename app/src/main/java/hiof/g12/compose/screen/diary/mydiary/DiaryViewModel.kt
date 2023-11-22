@@ -1,15 +1,9 @@
-package hiof.g12.compose.screen.diary.mydiary
+package hiof.g12.compose.screen.diary
 
-import android.nfc.Tag
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.type.DateTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import hiof.g12.compose.model.Diary
 import hiof.g12.compose.model.Hobby
@@ -19,6 +13,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.time.Duration
+import java.time.Instant
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -31,7 +28,6 @@ class DiaryViewModel  @Inject constructor(
 ) : ViewModel() {
 
     val diaries = storageService.diaries
-    val socialMedia = storageService.socialMedia
 
     private val _activeDiary = MutableStateFlow<Diary?>(null)
     val activeDiary: StateFlow<Diary?> = _activeDiary
@@ -62,16 +58,10 @@ class DiaryViewModel  @Inject constructor(
         }
     }
 
-    fun deleteDiary(diaryId: String) {
-        viewModelScope.launch {
-            storageService.deleteDiary(diaryId)
-        }
-    }
-
     fun addDiary(diaryDescription: String, hobby: Hobby) {
         viewModelScope.launch {
             val currentDate = Calendar.getInstance().time
-            val newDiary = Diary(description = diaryDescription, startDate = currentDate, socialMedia= false, hobby= hobby, userId = accountService.currentUserId)
+            val newDiary = Diary(description = diaryDescription, startDate = currentDate, hobby= hobby, userId = accountService.currentUserId)
             storageService.saveDiary(newDiary)
 
             fetchActiveDiary()
