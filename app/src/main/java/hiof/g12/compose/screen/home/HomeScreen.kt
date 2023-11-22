@@ -1,27 +1,20 @@
 package hiof.g12.compose.screen.home
 
 import TopBar
-import android.os.CountDownTimer
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -33,27 +26,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.unit.toSize
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import hiof.g12.component.HobbyDropDownMenuComponent
-import hiof.g12.component.TimerComponent
-import hiof.g12.compose.model.Diary
 import hiof.g12.compose.ui.theme.BackGroundColor
 import hiof.g12.compose.model.Hobby
-import hiof.g12.compose.navigation.Screens
 import hiof.g12.compose.screen.diary.DiaryViewModel
 import hiof.g12.compose.screen.hobbies.HobbiesViewModel
 import hiof.g12.compose.ui.theme.ButtonColorBlue
-import kotlinx.coroutines.flow.emptyFlow
-import java.util.Objects
-import java.util.Timer
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -61,7 +45,12 @@ fun HomeScreen(
     navController: NavController, viewModel: DiaryViewModel = hiltViewModel()
 ) {
 
-    val activeActivity by viewModel.activeActivity
+    // https://developer.android.com/jetpack/compose/state
+
+    val activeDiaryState = viewModel.activeDiary.collectAsState()
+
+    // Access the value using .value
+    val activeDiary = activeDiaryState.value
 
     Surface(modifier = Modifier.fillMaxSize(), color = BackGroundColor) {
         Box(modifier = Modifier.fillMaxSize()) {
@@ -73,10 +62,11 @@ fun HomeScreen(
                 verticalArrangement = Arrangement.Center
             ) {
 
-                if(activeActivity == null) {
+                // Check if activeDiary is null or not
+                if (activeDiary == null) {
                     InActiveActivity()
-                } else if(activeActivity == Diary()) {
-                    ActiveActivity()
+                } else {
+                    ActiveActivity(activeDiary!!)
                 }
 
             }
@@ -85,8 +75,8 @@ fun HomeScreen(
 }
 
 @Composable
-fun ActiveActivity() {
-
+fun ActiveActivity(activeDiary: Any) {
+    Text(text = "ACTIVE")
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

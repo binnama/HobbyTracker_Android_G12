@@ -70,6 +70,8 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended:1.5.4")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.navigation:navigation-runtime-ktx:2.7.5")
+    implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
+
 
     //firebase
     implementation(platform("com.google.firebase:firebase-abt:21.1.1"))
