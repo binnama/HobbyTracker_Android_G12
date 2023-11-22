@@ -87,7 +87,7 @@ fun AddHobbyScreen(navController: NavController, viewModel: HobbiesViewModel = h
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditableExposedDropdownMenuSample(onColorSelected: (String) -> Unit) {
-    val options = listOf("Red", "Green", "Blue", "Cyan", "Yellow", "Magenta")
+    val options = listOf("#6C7BAA", "#CFA616", "#007D58", "#695B74")
     var expanded by remember { mutableStateOf(false) }
     var selectedOptionText by remember { mutableStateOf("") }
 
@@ -114,8 +114,10 @@ fun EditableExposedDropdownMenuSample(onColorSelected: (String) -> Unit) {
                 onDismissRequest = { expanded = false },
             ) {
                 filteringOptions.forEach { selectionOption ->
+                    val colorInt = android.graphics.Color.parseColor(selectionOption)
+                    val colorText = Color(colorInt)
                     DropdownMenuItem(
-                        text = { Text(selectionOption) },
+                        text = { Text(selectionOption, color = colorText)},
                         onClick = {
                             selectedOptionText = selectionOption
                             expanded = false

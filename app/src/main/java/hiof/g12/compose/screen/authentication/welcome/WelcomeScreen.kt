@@ -44,10 +44,10 @@ fun WelcomeScreen (navController: NavController) {
 
             ButtonStartComponent(value = stringResource(id = R.string.login),
                 onClick = {navController.navigate(Screens.LoginScreen.name)})
-            Spacer(modifier = Modifier.height(130.dp))
+            Spacer(modifier = Modifier.height(30.dp))
             ButtonStartComponent(value = stringResource(id = R.string.sign_up), onClick = {navController.navigate(Screens.RegisterScreen.name)})
 
-            Spacer(modifier = Modifier.height(130.dp))
+            Spacer(modifier = Modifier.height(30.dp))
             ButtonStartComponent(value = stringResource(R.string.continue_without_login), onClick = {
                 viewModel.authenticateAnonymously(
                     onSuccess = {

@@ -3,6 +3,7 @@ package hiof.g12.compose.service.impl
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.dataObjects
 import com.google.firebase.firestore.ktx.toObject
 import hiof.g12.compose.model.Diary
@@ -61,9 +62,9 @@ constructor(
                         Filter.equalTo(USER_ID_FIELD, "")
                     )
                 )
+                .orderBy(STOP_DATE, Query.Direction.DESCENDING)
                 .dataObjects()
         }
-
 
     // Henter pågående aktivitet, hvis den eksisterer, så returneres objektet, hvis ikke, returneres null.
     override suspend fun getActiveActivity(userId: String): Diary? {
@@ -75,6 +76,13 @@ constructor(
             .toObjects(Diary::class.java)
             .firstOrNull()
     }
+
+
+    override val socialMedia: Flow<List<Diary>>
+        get() = firestore.collection(DIARY_COLLLECTION)
+            .whereEqualTo(SOCIAL_MEDIA, true)
+            .orderBy(STOP_DATE, Query.Direction.DESCENDING)
+            .dataObjects()
 
 
     // Stopper pågående aktivitet. Endrer stop date feltet til current tid.
@@ -97,8 +105,42 @@ constructor(
 
     // Lagrer en ny aktvitet.
     override suspend fun saveDiary(diary: Diary): String {
-        val diaryWithUserId = diary.copy(userId = auth.currentUserId)
-        return firestore.collection(DIARY_COLLLECTION).add(diaryWithUserId).await().id
+        try {
+            val diaryWithUserId = diary.copy(userId = auth.currentUserId)
+            return firestore.collection(DIARY_COLLLECTION).add(diaryWithUserId).await().id
+        } catch (e: Exception) {
+            println("Error ved lagring av Diary")
+            throw e
+        }
+    }
+
+    // Oppdaterer en social media status
+    override suspend fun editSocialMediaStatus(diaryId: String, currentState: Boolean) {
+        val socialMediaUpdate = hashMapOf(
+            SOCIAL_MEDIA to !(currentState)
+        ).toMap()
+        try {
+            firestore.collection(DIARY_COLLLECTION)
+                .document(diaryId)
+                .update(socialMediaUpdate)
+                .await()
+        } catch (e: Exception) {
+            println("Error ved oppdatering av social media status")
+            throw e
+        }
+    }
+
+    // Sletter en aktivitet
+    override suspend fun deleteDiary(diaryId: String) {
+        try {
+            firestore.collection(DIARY_COLLLECTION)
+                .document(diaryId)
+                .delete()
+                .await()
+        } catch (e: Exception) {
+            println("Error ved sletting av diary")
+            throw e
+        }
     }
 
     companion object {
@@ -106,5 +148,6 @@ constructor(
         private const val DIARY_COLLLECTION = "diaries"
         private const val USER_ID_FIELD = "userId"
         private const val STOP_DATE = "stopDate"
+        private const val SOCIAL_MEDIA = "socialMedia"
     }
 }

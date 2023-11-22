@@ -2,7 +2,6 @@ package hiof.g12.compose.screen.home
 
 import TopBar
 import android.widget.Toast
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,17 +10,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -40,12 +35,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import hiof.g12.compose.model.Diary
 import hiof.g12.compose.ui.theme.BackGroundColor
 import hiof.g12.compose.model.Hobby
-import hiof.g12.compose.screen.diary.DiaryViewModel
+import hiof.g12.compose.screen.diary.mydiary.DiaryViewModel
 import hiof.g12.compose.screen.hobbies.HobbiesViewModel
 import hiof.g12.compose.ui.theme.ButtonColorBlue
 
@@ -139,15 +133,16 @@ fun InActiveActivity(viewModel: DiaryViewModel = hiltViewModel()) {
 
     val context = LocalContext.current
 
+    Text(text = "Start an activity right now, stop being lazy", color = Color.White)
+    Spacer(modifier = Modifier.height(30.dp))
 
-
+    Text(text = "Give your activity a name", color = Color.White)
     TextField(value = activityText, onValueChange = {activityText = it})
     Spacer(modifier = Modifier.height(30.dp))
     HobbyDropDownMenu(onHobbySelected = { selectedHobby = it })
     Spacer(modifier = Modifier.height(30.dp))
 
     if (selectedHobby != null) {
-
         Button(
             onClick = { viewModel.addDiary(activityText, selectedHobby!!)
                 Toast.makeText(context, "Startet en aktivitet", Toast.LENGTH_SHORT).show()

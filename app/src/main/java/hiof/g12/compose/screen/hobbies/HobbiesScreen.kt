@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -43,7 +44,9 @@ fun HobbiesScreen(navController: NavController, viewModel: HobbiesViewModel = hi
             TopBar("Hobbies", navController)
 
             Column(
-                modifier = Modifier.align(Alignment.Center),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = 60.dp, bottom = 60.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -75,7 +78,8 @@ fun HobbiesScreen(navController: NavController, viewModel: HobbiesViewModel = hi
 fun HobbyItem(hobby: Hobby) {
 
     //parseColor fra https://developermemos.com/posts/using-hex-colors-compose
-    val color = Color(android.graphics.Color.parseColor(hobby.color))
+    fun String.toColor() = Color(android.graphics.Color.parseColor(this))
+    val color = hobby.color.toColor()
     Button(onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(containerColor = color, contentColor = Color.White), modifier = Modifier.widthIn(min = 300.dp)) {
         Text(text = hobby.title)
     }
