@@ -29,4 +29,5 @@ enum class Screens {
 
     // LOGGBOK
     MyDiaryScreen,
+    DiaryDetailScreen
 }

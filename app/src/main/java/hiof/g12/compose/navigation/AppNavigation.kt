@@ -22,6 +22,7 @@ import hiof.g12.compose.screen.diary.MyDiaryScreen
 import hiof.g12.compose.screen.authentication.register.RegisterScreen
 import hiof.g12.compose.screen.social.SocialScreen
 import hiof.g12.compose.screen.authentication.welcome.WelcomeScreen
+import hiof.g12.compose.screen.diary.diarydetail.DiaryDetailScreen
 import hiof.g12.compose.screen.menu.MenuScreen
 import hiof.g12.compose.screen.user.UserScreen
 
@@ -85,6 +86,10 @@ fun AppNavigation() {
             }
             composable(route = Screens.MyDiaryScreen.name) {
                 MyDiaryScreen(navController = navController)
+            }
+            composable(route = Screens.DiaryDetailScreen.name + "/{diaryId}") { backStackEntry ->
+                val diaryId = backStackEntry.arguments?.getString("diaryId")
+                DiaryDetailScreen(navController = navController, diaryId = diaryId)
             }
             composable(route = Screens.CalendarScreen.name) {
                 CalendarScreen(navController = navController)

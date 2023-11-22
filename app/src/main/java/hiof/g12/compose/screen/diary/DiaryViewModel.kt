@@ -57,6 +57,12 @@ class DiaryViewModel  @Inject constructor(
         }
     }
 
+    fun deleteDiary(diaryId: String) {
+        viewModelScope.launch {
+            storageService.deleteDiary(diaryId)
+        }
+    }
+
     fun addDiary(diaryDescription: String, hobby: Hobby) {
         viewModelScope.launch {
             val currentDate = Calendar.getInstance().time

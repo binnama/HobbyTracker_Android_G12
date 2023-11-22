@@ -25,4 +25,7 @@ interface StorageService {
     suspend fun getDiary(diaryId: String): Diary?
 
     suspend fun saveDiary(diary: Diary): String
+
+    suspend fun editSocialMediaStatus(diaryId: String)
+    suspend fun deleteDiary(diaryId: String)
 }

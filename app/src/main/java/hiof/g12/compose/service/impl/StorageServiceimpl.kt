@@ -97,8 +97,42 @@ constructor(
 
     // Lagrer en ny aktvitet.
     override suspend fun saveDiary(diary: Diary): String {
-        val diaryWithUserId = diary.copy(userId = auth.currentUserId)
-        return firestore.collection(DIARY_COLLLECTION).add(diaryWithUserId).await().id
+        try {
+            val diaryWithUserId = diary.copy(userId = auth.currentUserId)
+            return firestore.collection(DIARY_COLLLECTION).add(diaryWithUserId).await().id
+        } catch (e: Exception) {
+            println("Error ved lagring av Diary")
+            throw e
+        }
+    }
+
+    // Oppdaterer en social media status
+    override suspend fun editSocialMediaStatus(diaryId: String) {
+        val socialMediaUpdate = hashMapOf(
+            SOCIAL_MEDIA to true
+        ).toMap()
+        try {
+            firestore.collection(DIARY_COLLLECTION)
+                .document(diaryId)
+                .update(socialMediaUpdate)
+                .await()
+        } catch (e: Exception) {
+            println("Error ved oppdatering av social media status")
+            throw e
+        }
+    }
+
+    // Sletter en aktivitet
+    override suspend fun deleteDiary(diaryId: String) {
+        try {
+            firestore.collection(DIARY_COLLLECTION)
+                .document(diaryId)
+                .delete()
+                .await()
+        } catch (e: Exception) {
+            println("Error ved sletting av diary")
+            throw e
+        }
     }
 
     companion object {
@@ -106,5 +140,6 @@ constructor(
         private const val DIARY_COLLLECTION = "diaries"
         private const val USER_ID_FIELD = "userId"
         private const val STOP_DATE = "stopDate"
+        private const val SOCIAL_MEDIA = "socialMedia"
     }
 }
