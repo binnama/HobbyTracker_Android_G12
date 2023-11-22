@@ -1,4 +1,4 @@
-package hiof.g12.compose.screen.diary
+package hiof.g12.compose.screen.diary.mydiary
 
 import android.nfc.Tag
 import android.util.Log
@@ -27,6 +27,7 @@ class DiaryViewModel  @Inject constructor(
 ) : ViewModel() {
 
     val diaries = storageService.diaries
+    val socialMedia = storageService.socialMedia
 
     private val _activeDiary = MutableStateFlow<Diary?>(null)
     val activeDiary: StateFlow<Diary?> = _activeDiary
@@ -66,7 +67,7 @@ class DiaryViewModel  @Inject constructor(
     fun addDiary(diaryDescription: String, hobby: Hobby) {
         viewModelScope.launch {
             val currentDate = Calendar.getInstance().time
-            val newDiary = Diary(description = diaryDescription, startDate = currentDate, hobby= hobby, userId = accountService.currentUserId)
+            val newDiary = Diary(description = diaryDescription, startDate = currentDate, socialMedia= false, hobby= hobby, userId = accountService.currentUserId)
             storageService.saveDiary(newDiary)
 
             fetchActiveDiary()

@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.Flow
 // Denne koden ble hentet av forelesningen under modul: Firebase Authentication
 interface AccountService {
     val currentUserId: String
+    val currentUserEmail: String
     val hasUser: Boolean
     val currentUser: Flow<User>
 

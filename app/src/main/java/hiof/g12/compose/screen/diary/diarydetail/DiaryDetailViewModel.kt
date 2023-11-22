@@ -19,9 +19,9 @@ class DiaryDetailViewModel @Inject constructor(
     private val _currentDiary = MutableStateFlow<Diary?>(null)
     val currentDiary: StateFlow<Diary?> = _currentDiary
 
-    fun updateSocialStatus(diaryId: String) {
+    fun updateSocialStatus(diaryId: String, currentState: Boolean) {
         viewModelScope.launch {
-            storageService.editSocialMediaStatus(diaryId)
+            storageService.editSocialMediaStatus(diaryId, currentState)
             fetchDiaryDetails(diaryId)
         }
     }

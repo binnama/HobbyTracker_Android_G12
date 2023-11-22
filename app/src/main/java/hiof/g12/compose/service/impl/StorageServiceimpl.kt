@@ -3,6 +3,7 @@ package hiof.g12.compose.service.impl
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.dataObjects
 import com.google.firebase.firestore.ktx.toObject
 import hiof.g12.compose.model.Diary
@@ -61,9 +62,9 @@ constructor(
                         Filter.equalTo(USER_ID_FIELD, "")
                     )
                 )
+                .orderBy(STOP_DATE, Query.Direction.DESCENDING)
                 .dataObjects()
         }
-
 
     // Henter pågående aktivitet, hvis den eksisterer, så returneres objektet, hvis ikke, returneres null.
     override suspend fun getActiveActivity(userId: String): Diary? {
@@ -75,6 +76,13 @@ constructor(
             .toObjects(Diary::class.java)
             .firstOrNull()
     }
+
+
+    override val socialMedia: Flow<List<Diary>>
+        get() = firestore.collection(DIARY_COLLLECTION)
+            .whereEqualTo(SOCIAL_MEDIA, true)
+            .orderBy(STOP_DATE, Query.Direction.DESCENDING)
+            .dataObjects()
 
 
     // Stopper pågående aktivitet. Endrer stop date feltet til current tid.
@@ -107,9 +115,9 @@ constructor(
     }
 
     // Oppdaterer en social media status
-    override suspend fun editSocialMediaStatus(diaryId: String) {
+    override suspend fun editSocialMediaStatus(diaryId: String, currentState: Boolean) {
         val socialMediaUpdate = hashMapOf(
-            SOCIAL_MEDIA to true
+            SOCIAL_MEDIA to !(currentState)
         ).toMap()
         try {
             firestore.collection(DIARY_COLLLECTION)
