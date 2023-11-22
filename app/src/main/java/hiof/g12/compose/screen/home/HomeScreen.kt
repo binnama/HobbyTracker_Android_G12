@@ -1,6 +1,7 @@
 package hiof.g12.compose.screen.home
 
 import TopBar
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -8,13 +9,18 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -28,11 +34,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import hiof.g12.compose.model.Diary
 import hiof.g12.compose.ui.theme.BackGroundColor
 import hiof.g12.compose.model.Hobby
 import hiof.g12.compose.screen.diary.DiaryViewModel
@@ -75,8 +83,49 @@ fun HomeScreen(
 }
 
 @Composable
-fun ActiveActivity(activeDiary: Any) {
-    Text(text = "ACTIVE")
+fun ActiveActivity(activeDiary: Diary, viewModel: DiaryViewModel = hiltViewModel()) {
+
+            Text(
+                text = "PÅGÅENDE AKTIVITET",
+                modifier = Modifier
+                    .padding(16.dp),
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.Bold,
+                fontSize = 24.sp,
+                color = Color.White
+
+                )
+            Text(text = "Aktiv aktivitet: " + activeDiary.description, fontSize = 24.sp,
+                color = Color.White)
+            Spacer(modifier = Modifier.height(30.dp))
+
+            Text(text = "Hobby: " + activeDiary.hobby.title, fontSize = 24.sp,
+                color = Color.White)
+            Spacer(modifier = Modifier.height(30.dp))
+
+            // Her skal timer...
+            Text(text = "00.00.00 ", fontSize = 24.sp,
+                color = Color.White)
+            Spacer(modifier = Modifier.height(30.dp))
+
+            Button(
+                onClick = { },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Red,
+                    contentColor = Color.White
+                ), modifier = Modifier
+                    .widthIn(min = 300.dp)
+                    .heightIn(48.dp)
+            ) {
+                Text(
+                    text = "Stopp", fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                )
+            }
+
+
+
+
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

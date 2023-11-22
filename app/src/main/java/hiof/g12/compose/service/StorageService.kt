@@ -20,6 +20,8 @@ interface StorageService {
 
     suspend fun getActiveActivity(userId: String): Diary?
 
+    suspend fun stopActiveActivity(diaryId: String)
+
     suspend fun getDiary(diaryId: String): Diary?
 
     suspend fun saveDiary(diary: Diary): String
