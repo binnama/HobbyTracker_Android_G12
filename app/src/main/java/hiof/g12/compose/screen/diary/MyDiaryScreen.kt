@@ -1,4 +1,4 @@
-package hiof.g12.compose.screen.diary.mydiary
+package hiof.g12.compose.screen.diary
 
 import TopBar
 import android.widget.Toast
@@ -20,7 +20,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
