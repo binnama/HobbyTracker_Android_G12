@@ -73,13 +73,20 @@ class DiaryViewModel  @Inject constructor(
     fun calculateActivityTime(startTime: Date, stopTime: Date?): String {
             val formatter = DateTimeFormatter.ISO_DATE_TIME
             val startTime = Instant.from(formatter.parse(startTime.toString()))
-            val stopTime = Instant.from(formatter.parse(stopTime.toString()))
+            val stopTime = stopTime?.let { Instant.from(formatter.parse(stopTime.toString())) }
 
-            val duration = Duration.between(startTime, stopTime)
+            val duration = if (stopTime != null) {
+                Duration.between(startTime, stopTime)
+            } else {
+                Duration.ZERO
+            }
 
-            val hours = duration.toHours()
-            val minutes = (duration.toMinutes() % 60)
-            val seconds = (duration.seconds % 60)
+            //val duration = Duration.between(startTime, stopTime)
+
+            val totalMinutes = duration.toMinutes()
+            val hours = totalMinutes / 60
+            val minutes = totalMinutes % 60
+            val seconds = duration.seconds % 60
 
             return String.format("%02d:%02d:%02d", hours, minutes, seconds)
     }
