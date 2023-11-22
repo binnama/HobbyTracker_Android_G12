@@ -11,10 +11,10 @@ enum class Screens {
     // TOP MENU NAVIGATION
     MenuScreen,
 
-    // HJEM
+    // HOME
     HomeScreen,
 
-    //USER
+    // USER
     UserScreen,
 
     // HOBBIES

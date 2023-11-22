@@ -38,7 +38,7 @@ fun MenuScreen(navController: NavController, viewModel: MenuViewModel = hiltView
                 verticalArrangement = Arrangement.Center
             ) {
                 Button(
-                    onClick = { navController.navigate(Screens.HomeScreen.name) {
+                    onClick = { navController.navigate(Screens.UserScreen.name) {
 
                     } },
                     colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color.Black),

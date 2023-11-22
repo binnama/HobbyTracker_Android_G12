@@ -1,5 +1,7 @@
 package hiof.g12.compose.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.padding
@@ -37,6 +39,7 @@ fun validBottomNavRoute(destination: String?): Boolean {
 
 
 // App Navigation her. Har kontroll på hvor man er, og hvilke sider som er navigerbare.
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppNavigation() {
