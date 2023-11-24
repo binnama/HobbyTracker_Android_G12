@@ -29,5 +29,5 @@ interface StorageService {
     suspend fun editSocialMediaStatus(diaryId: String, currentState: Boolean)
     suspend fun deleteDiary(diaryId: String)
 
-    val socialMedia: Flow<List<Diary>>
+    suspend fun getSocialMediaList(): Flow<List<Diary>>
 }
