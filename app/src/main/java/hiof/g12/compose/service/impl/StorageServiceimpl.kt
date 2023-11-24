@@ -77,13 +77,12 @@ constructor(
             .firstOrNull()
     }
 
-
-    override val socialMedia: Flow<List<Diary>>
-        get() = firestore.collection(DIARY_COLLLECTION)
+    override suspend fun getSocialMediaList(): Flow<List<Diary>> {
+        return firestore.collection(DIARY_COLLLECTION)
             .whereEqualTo(SOCIAL_MEDIA, true)
             .orderBy(STOP_DATE, Query.Direction.DESCENDING)
             .dataObjects()
-
+    }
 
     // Stopper pågående aktivitet. Endrer stop date feltet til current tid.
     override suspend fun stopActiveActivity(diaryId: String) {

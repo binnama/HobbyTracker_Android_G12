@@ -1,7 +1,6 @@
 package hiof.g12.compose.screen.diary.diarydetail
 
-import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.SavedStateHandle
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel

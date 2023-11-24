@@ -30,21 +30,21 @@ class DiaryViewModel  @Inject constructor(
     private val accountService: AccountService
 ) : ViewModel() {
 
+    // Alle diaries data
     val diaries = storageService.diaries
-    val socialMedia = storageService.socialMedia
 
+    // Alle sosiale medier posts
+    private val _socialMedia = MutableStateFlow<List<Diary>>(emptyList())
+    val socialMedia: StateFlow<List<Diary>> = _socialMedia
+
+    // Aktiv aktivitet hvis den finnes
     private val _activeDiary = MutableStateFlow<Diary?>(null)
     val activeDiary: StateFlow<Diary?> = _activeDiary
 
     init {
-        // Fetch active diary when the ViewModel is initialized
+        _socialMedia.value = emptyList()
         fetchActiveDiary()
-    }
-
-    // Function to fetch the active diary
-    init {
-        // Fetch active diary when the ViewModel is initialized
-        fetchActiveDiary()
+        fetchSocialPosts()
     }
 
     private fun fetchActiveDiary() {
@@ -52,6 +52,14 @@ class DiaryViewModel  @Inject constructor(
             val userId = accountService.currentUserId
             val activeDiary = storageService.getActiveActivity(userId)
             _activeDiary.value = activeDiary
+        }
+    }
+
+    fun fetchSocialPosts() {
+        viewModelScope.launch {
+            storageService.getSocialMediaList().collect { socialPosts ->
+                _socialMedia.value = socialPosts
+            }
         }
     }
 

@@ -1,5 +1,6 @@
 package hiof.g12.compose.screen.diary.diarydetail
 
+import ListItemComponent
 import TopBar
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,7 +11,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Accessibility
+import androidx.compose.material.icons.filled.DirectionsRun
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.Start
+import androidx.compose.material.icons.filled.StopCircle
+import androidx.compose.material.icons.filled.Timelapse
 import androidx.compose.material3.Button
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -45,7 +51,7 @@ fun DiaryDetailScreen(navController: NavController, diaryId: String?, viewModel:
 
     Surface(modifier = Modifier.fillMaxSize(), color = BackGroundColor) {
         Box(modifier = Modifier.fillMaxSize()) {
-            TopBar("DETAIL DIARY", navController)
+            TopBar("Diary Detail", navController)
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -58,29 +64,19 @@ fun DiaryDetailScreen(navController: NavController, diaryId: String?, viewModel:
                 } else {
                     val formattedStartDate =
                         currentDiaryState?.startDate?.let {
-                            SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(
-                                it
-                            )
+                            SimpleDateFormat("HH:mm dd-MM-yyyy", Locale.getDefault()).format(it)
                         }
+
                     val formattedStopDate =
                         currentDiaryState?.stopDate?.let {
-                            SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(
-                                it
-                            )
+                            SimpleDateFormat("HH:mm dd-MM-yyyy", Locale.getDefault()).format(it)
                         }
-                    Text(text = "Activity: " + currentDiaryState?.description, color = Color.White)
 
-                    Spacer(modifier = Modifier.height(30.dp))
-
-                    Text(text = "Hobby: " + currentDiaryState?.hobby?.title, color = Color.White)
-
-                    Spacer(modifier = Modifier.height(30.dp))
-
-                    Text(text = "Start time: " + formattedStartDate, color = Color.White)
-
-                    Spacer(modifier = Modifier.height(30.dp))
-
-                    Text(text = "Stop time: " + formattedStopDate, color = Color.White)
+                    ListItemComponent("Activity", currentDiaryState?.description, Icons.Filled.DirectionsRun)
+                    ListItemComponent("Hobby", currentDiaryState?.hobby?.title, Icons.Filled.Accessibility)
+                    ListItemComponent("Started", formattedStartDate, Icons.Filled.Start)
+                    ListItemComponent("Stopped", formattedStopDate, Icons.Filled.StopCircle)
+                    ListItemComponent("Time elapsed", "20 hours", Icons.Filled.Timelapse)
 
                     Spacer(modifier = Modifier.height(30.dp))
                     
