@@ -24,6 +24,7 @@ import hiof.g12.component.DividerTextComponent
 import hiof.g12.component.IconStart
 import hiof.g12.component.MyTextFieldComponent
 import hiof.g12.component.PasswordTextFieldComponent
+import hiof.g12.component.SpacerComponent
 import hiof.g12.compose.ui.theme.BackGroundColor
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -43,7 +44,8 @@ fun RegisterScreen (
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             IconStart()
-            Spacer(modifier = Modifier.height(50.dp))
+            SpacerComponent(50)
+
 
             if (uiState.errorMessage != 0)
                 Text(
@@ -58,7 +60,7 @@ fun RegisterScreen (
                 onValueChange = { viewModel.onUsernameChange(it) }
                 )
 
-            Spacer(modifier = Modifier.height(5.dp))
+            SpacerComponent()
 
             MyTextFieldComponent(
                 labelValue = stringResource(id = R.string.email),
@@ -66,31 +68,28 @@ fun RegisterScreen (
                 onValueChange = { viewModel.onEmailChange(it) }
             )
 
-            Spacer(modifier = Modifier.height(5.dp))
+            SpacerComponent()
 
             PasswordTextFieldComponent(labelValue = stringResource(id = R.string.enter_password),
                 value = uiState.password,
                 onValueChange = { viewModel.onPasswordChange(it) }
             )
 
-            Spacer(modifier = Modifier.height(5.dp))
+            SpacerComponent()
 
             PasswordTextFieldComponent(labelValue = stringResource(id = R.string.confirm_password),
                 value = uiState.confirmPassword,
                 onValueChange = { viewModel.onConfirmPasswordChange(it) }
             )
 
-            /*Spacer(modifier = Modifier.height(5.dp))
-            CheckboxComponent(value = stringResource(id = R.string.terms_and_conditions))
-            Spacer(modifier = Modifier.height(5.dp))*/
+            SpacerComponent()
 
             ButtonStartComponent(
                 value = stringResource(id = R.string.sign_up),
                 onClick = { viewModel.onSignUpClick(loggedIn)
                 })
 
-            Spacer(modifier = Modifier.height(15.dp))
-            DividerTextComponent()
+            SpacerComponent()
 
             ClickableLoginTextComponent(tryingToLogin = true, onTextSelected = {
             })

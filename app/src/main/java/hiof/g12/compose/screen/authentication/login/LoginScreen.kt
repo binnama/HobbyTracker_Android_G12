@@ -18,10 +18,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import hiof.g12.R
 import hiof.g12.component.ButtonStartComponent
 import hiof.g12.component.ClickableLoginTextComponent
-import hiof.g12.component.DividerTextComponent
 import hiof.g12.component.IconStart
 import hiof.g12.component.MyTextFieldComponent
 import hiof.g12.component.PasswordTextFieldComponent
+import hiof.g12.component.SpacerComponent
 import hiof.g12.component.UnderlinedNormalTextComponent
 import hiof.g12.compose.ui.theme.BackGroundColor
 
@@ -41,7 +41,7 @@ fun LoginScreen  (loggedIn: () -> Unit,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             IconStart()
-            Spacer(modifier = Modifier.height(50.dp))
+            SpacerComponent(50)
 
             // Dersom error eksisterer, vis det.
             if (uiState.errorMessage != 0)
@@ -57,29 +57,24 @@ fun LoginScreen  (loggedIn: () -> Unit,
                 onValueChange = { viewModel.onEmailChange(it) }
             )
 
-            Spacer(modifier = Modifier.height(20.dp))
-
+            SpacerComponent()
             PasswordTextFieldComponent(
                 labelValue = stringResource(id = R.string.enter_password),
                 value = uiState.password,
                 onValueChange = { viewModel.onPasswordChange(it) }
             )
 
-            Spacer(modifier = Modifier.height(10.dp))
+            SpacerComponent()
             UnderlinedNormalTextComponent(value = stringResource(id = R.string.forgot_password))
 
-            Spacer(modifier = Modifier.height(10.dp))
+            SpacerComponent()
             ButtonStartComponent(
                 value = stringResource(id = R.string.login),
                 onClick = { viewModel.onLoginClick(loggedIn)
                 })
 
-            Spacer(modifier = Modifier.height(20.dp))
-            DividerTextComponent()
-
-            Spacer(modifier = Modifier.height(20.dp))
+            SpacerComponent(20)
             ClickableLoginTextComponent(tryingToLogin = false,  onTextSelected = {})
-
         }
     }
 }
