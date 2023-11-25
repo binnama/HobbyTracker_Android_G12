@@ -66,7 +66,6 @@ fun UserScreen (navController: NavController, viewModel: DiaryViewModel = hiltVi
                 Spacer(modifier = Modifier.height(50.dp))
                 Text(text = "All activities:", color = Color.White)
 
-
                 Spacer(modifier = Modifier.height(10.dp))
                 if (hobbies.isNotEmpty()) {
                     LazyColumn {

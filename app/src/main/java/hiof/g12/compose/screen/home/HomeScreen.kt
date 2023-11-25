@@ -1,5 +1,6 @@
 package hiof.g12.compose.screen.home
 
+import ListItemComponent
 import TopBar
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
@@ -11,6 +12,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccessTime
+import androidx.compose.material.icons.filled.Accessibility
+import androidx.compose.material.icons.filled.PlayCircle
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenuItem
@@ -42,6 +47,7 @@ import hiof.g12.compose.model.Hobby
 import hiof.g12.compose.screen.diary.mydiary.DiaryViewModel
 import hiof.g12.compose.screen.hobbies.HobbiesViewModel
 import hiof.g12.compose.ui.theme.ButtonColorBlue
+import hiof.g12.features.convertDateToLocalFormat
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -80,29 +86,14 @@ fun HomeScreen(
 @Composable
 fun ActiveActivity(activeDiary: Diary, viewModel: DiaryViewModel = hiltViewModel()) {
     val context = LocalContext.current
+    val formattedStartDate = convertDateToLocalFormat(activeDiary.startDate)
+    Text(text = "You have started an activity", color = Color.White)
+    Spacer(modifier = Modifier.height(30.dp))
+    ListItemComponent(title = "ACTIVE ACTIVITY", description = "" + activeDiary.description, icon = Icons.Filled.PlayCircle)
+    ListItemComponent(title = "Current hobby", description = "" + activeDiary.hobby.title, icon = Icons.Filled.Accessibility)
+    ListItemComponent(title = "Activity started", description = "" + formattedStartDate, icon = Icons.Filled.AccessTime)
 
-    Text(
-                text = "PÅGÅENDE AKTIVITET",
-                modifier = Modifier
-                    .padding(16.dp),
-                textAlign = TextAlign.Center,
-                fontWeight = FontWeight.Bold,
-                fontSize = 24.sp,
-                color = Color.White
-
-                )
-            Text(text = "Aktiv aktivitet: " + activeDiary.description, fontSize = 24.sp,
-                color = Color.White)
-            Spacer(modifier = Modifier.height(30.dp))
-
-            Text(text = "Hobby: " + activeDiary.hobby.title, fontSize = 24.sp,
-                color = Color.White)
-            Spacer(modifier = Modifier.height(30.dp))
-
-            // Her skal timer...
-            Text(text = "00.00.00 ", fontSize = 24.sp,
-                color = Color.White)
-            Spacer(modifier = Modifier.height(30.dp))
+    Spacer(modifier = Modifier.height(30.dp))
 
             Button(
                 onClick = { viewModel.stopActivity(activeDiary.uid)
@@ -116,7 +107,7 @@ fun ActiveActivity(activeDiary: Diary, viewModel: DiaryViewModel = hiltViewModel
                     .heightIn(48.dp)
             ) {
                 Text(
-                    text = "Stopp", fontSize = 24.sp,
+                    text = "STOP ACTIVITY", fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                 )
             }
@@ -145,7 +136,7 @@ fun InActiveActivity(viewModel: DiaryViewModel = hiltViewModel()) {
     if (selectedHobby != null) {
         Button(
             onClick = { viewModel.addDiary(activityText, selectedHobby!!)
-                Toast.makeText(context, "Startet en aktivitet", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Activity started", Toast.LENGTH_SHORT).show()
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = ButtonColorBlue,
@@ -155,7 +146,7 @@ fun InActiveActivity(viewModel: DiaryViewModel = hiltViewModel()) {
                 .heightIn(48.dp)
         ) {
             Text(
-                text = "Start", fontSize = 24.sp,
+                text = "START ACTIVITY", fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
             )
         }
