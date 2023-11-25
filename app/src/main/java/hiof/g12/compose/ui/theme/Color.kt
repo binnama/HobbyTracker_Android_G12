@@ -2,6 +2,7 @@ package hiof.g12.compose.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
+val backGroundHex = "#343436"
 val ButtonColorBlue = Color(0xFF4289E2)
 val BackGroundColor = Color(0xFF343436)
 val White = Color(0xFFFFFFFF)

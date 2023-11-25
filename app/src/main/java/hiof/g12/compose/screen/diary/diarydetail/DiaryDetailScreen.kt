@@ -34,16 +34,21 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import hiof.g12.component.AlertDialogComponent
-import hiof.g12.compose.model.Diary
+import hiof.g12.component.ProgressComponent
+import hiof.g12.component.SpacerComponent
 import hiof.g12.compose.ui.theme.BackGroundColor
-import java.text.SimpleDateFormat
-import java.util.Locale
+import hiof.g12.compose.ui.theme.backGroundHex
+import hiof.g12.features.convertDateToLocalFormat
+import hiof.g12.features.convertToMinutesAndSeconds
 
 
 @Composable
 fun DiaryDetailScreen(navController: NavController, diaryId: String?, viewModel: DiaryDetailViewModel = hiltViewModel()) {
     val currentDiaryState by viewModel.currentDiary.collectAsState()
 
+    // Setter disse i en variabell slik at jeg kan bruke det senere
+    val startDate = currentDiaryState?.startDate
+    val stopDate = currentDiaryState?.stopDate
 
     LaunchedEffect(diaryId) {
         viewModel.fetchDiaryDetails(diaryId ?: "")
@@ -60,41 +65,37 @@ fun DiaryDetailScreen(navController: NavController, diaryId: String?, viewModel:
                 verticalArrangement = Arrangement.Center
             ) {
                 if (currentDiaryState == null) {
-                    Text(text = "Laster...")
+                    ProgressComponent()
                 } else {
-                    val formattedStartDate =
-                        currentDiaryState?.startDate?.let {
-                            SimpleDateFormat("HH:mm dd-MM-yyyy", Locale.getDefault()).format(it)
-                        }
+                    Button(onClick = { navController.popBackStack()}) {
+                        Text(text = "Back")
+                    }
+                    SpacerComponent()
+                    ListItemComponent("Activity", currentDiaryState?.description, Icons.Filled.DirectionsRun, backGroundHex)
+                    ListItemComponent("Hobby", currentDiaryState?.hobby?.title, Icons.Filled.Accessibility, backGroundHex)
 
-                    val formattedStopDate =
-                        currentDiaryState?.stopDate?.let {
-                            SimpleDateFormat("HH:mm dd-MM-yyyy", Locale.getDefault()).format(it)
-                        }
+                    if (startDate != null && stopDate != null) {
+                        val formattedStartDate = convertDateToLocalFormat(startDate)
+                        val formattedStopDate = convertDateToLocalFormat(stopDate)
+                        val formattedTimeSpent = convertToMinutesAndSeconds(startDate, stopDate)
 
-                    ListItemComponent("Activity", currentDiaryState?.description, Icons.Filled.DirectionsRun)
-                    ListItemComponent("Hobby", currentDiaryState?.hobby?.title, Icons.Filled.Accessibility)
-                    ListItemComponent("Started", formattedStartDate, Icons.Filled.Start)
-                    ListItemComponent("Stopped", formattedStopDate, Icons.Filled.StopCircle)
-                    ListItemComponent("Time elapsed", "20 hours", Icons.Filled.Timelapse)
+                        ListItemComponent("Started", formattedStartDate, Icons.Filled.Start, backGroundHex)
+                        ListItemComponent("Stopped", formattedStopDate, Icons.Filled.StopCircle, backGroundHex)
+                        ListItemComponent("Time elapsed in minutes", formattedTimeSpent, Icons.Filled.Timelapse, backGroundHex)
+                    } else {
+                        ListItemComponent("Time", "Can't calculate time. Have you stopped your activity?", Icons.Filled.Timelapse, backGroundHex)
+                    }
 
-                    Spacer(modifier = Modifier.height(30.dp))
-                    
                     if (currentDiaryState?.socialMedia != true) {
-                        Text(text = "This activity is not shared to socials. Share it!", color = Color.White)
+                        ListItemComponent("Social Media", "This activity has not been shared to the public", Icons.Filled.Share, backGroundHex)
                         EditSocialMediaStatus(diaryId, viewModel,  "Do you want to share this on socials?", currentDiaryState?.socialMedia!!)
                     } else {
-                        Text(text = "This activity has been shared to socials.", color = Color.White)
+                        ListItemComponent("Social Media", "This activity has been shared to the public", Icons.Filled.Share, backGroundHex)
                         EditSocialMediaStatus(diaryId, viewModel,  "Do you want to remove this from socials?",
                             currentDiaryState?.socialMedia!!
                         )
 
                     }
-
-                    Button(onClick = { navController.popBackStack()}) {
-                        Text(text = "Back")
-                    }
-                   
                 }
             }
         }
@@ -104,9 +105,13 @@ fun DiaryDetailScreen(navController: NavController, diaryId: String?, viewModel:
 @Composable
 fun EditSocialMediaStatus(diaryId: String?, viewModel: DiaryDetailViewModel = hiltViewModel(), dialogText: String?, currentState: Boolean) {
     var toggleDialog by remember { mutableStateOf(false) }
-
+    SpacerComponent()
     Button(onClick = { toggleDialog = true}) {
-        Text(text = "Social Media")
+        if (currentState == true) {
+            Text(text = "Unshare")
+        } else {
+            Text(text = "Share")
+        }
     }
 
     if (toggleDialog) {

@@ -32,12 +32,12 @@ import hiof.g12.component.UserNameDisplayComponent
 import hiof.g12.component.UserPicture
 import hiof.g12.compose.model.Diary
 import hiof.g12.compose.screen.diary.mydiary.DiaryViewModel
+import hiof.g12.features.convertToMinutesAndSeconds
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun UserScreen (navController: NavController, viewModel: DiaryViewModel = hiltViewModel()) {
 
-    val db = FirebaseFirestore.getInstance()
     //val hobbies by viewModel.hobbies.collectAsState(emptyList())
     val hobbies by viewModel.diaryEntries.collectAsState(emptyList())
 
@@ -64,7 +64,7 @@ fun UserScreen (navController: NavController, viewModel: DiaryViewModel = hiltVi
                     contentDescription = "User Picture",
                     modifier = Modifier.padding(16.dp))
                 Spacer(modifier = Modifier.height(50.dp))
-                Text(text = "All activities:")
+                Text(text = "All activities:", color = Color.White)
 
 
                 Spacer(modifier = Modifier.height(10.dp))
@@ -97,11 +97,11 @@ fun HobbyItem(diary: Diary, viewModel: DiaryViewModel = hiltViewModel()) {
     val start = diary.startDate
     val stop = diary.stopDate
 
-    val spentTime = viewModel.calculateActivityTime(start, stop)
+    val formattedTimeSpent = convertToMinutesAndSeconds(start, stop)
 
     Row {
-        Text(text = diary.hobby.title)
+        Text(text = diary.hobby.title, color = Color.White)
         Spacer(modifier = Modifier.width(10.dp))
-        Text(text = spentTime)
+        Text(text = formattedTimeSpent,  color = Color.White)
     }
 }
