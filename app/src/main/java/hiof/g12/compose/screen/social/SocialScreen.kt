@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import hiof.g12.component.SpacerComponent
 import hiof.g12.compose.model.Diary
 import hiof.g12.compose.screen.diary.mydiary.DiaryViewModel
 import hiof.g12.compose.ui.theme.BackGroundColor
@@ -108,6 +109,8 @@ fun SocialItem(diary: Diary) {
             Icon(imageVector = Icons.Filled.AccessTime, contentDescription = "Like button")
             Text(text = " Finished activity at " + diary.stopDate?.let { convertDateToLocalFormat(it) })
         }
+        Text(text = " Hobby: " + diary.hobby.title)
+        SpacerComponent()
     }
 }
 

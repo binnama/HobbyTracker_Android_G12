@@ -18,14 +18,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.sp
 import hiof.g12.compose.ui.theme.BackGroundColor
+import hiof.g12.features.HexToColorObject
 
 @SuppressLint("SuspiciousIndentation")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListItemComponent(title: String, description: String?, icon: ImageVector, backgroundColor: String = "#343436") {
-    fun String.toColor() = Color(android.graphics.Color.parseColor(this))
-    val color = backgroundColor.toColor()
-
+    val color = HexToColorObject(backgroundColor)
 
         Column {
             ListItem(

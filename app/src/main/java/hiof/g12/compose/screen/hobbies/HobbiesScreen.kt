@@ -32,6 +32,7 @@ import hiof.g12.compose.model.Hobby
 import hiof.g12.compose.navigation.Screens
 import hiof.g12.compose.service.StorageService
 import hiof.g12.compose.ui.theme.BackGroundColor
+import hiof.g12.features.HexToColorObject
 
 
 @Composable
@@ -76,11 +77,8 @@ fun HobbiesScreen(navController: NavController, viewModel: HobbiesViewModel = hi
 
 @Composable
 fun HobbyItem(hobby: Hobby) {
-
-    //parseColor fra https://developermemos.com/posts/using-hex-colors-compose
-    fun String.toColor() = Color(android.graphics.Color.parseColor(this))
-    val color = hobby.color.toColor()
-    Button(onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(containerColor = color, contentColor = Color.White), modifier = Modifier.widthIn(min = 300.dp)) {
+    val color = HexToColorObject( hobby.color)
+    Button(onClick = { /*Gjør ingenting. Les videreutvikling*/ }, colors = ButtonDefaults.buttonColors(containerColor = color, contentColor = Color.White), modifier = Modifier.widthIn(min = 300.dp)) {
         Text(text = hobby.title)
     }
 }

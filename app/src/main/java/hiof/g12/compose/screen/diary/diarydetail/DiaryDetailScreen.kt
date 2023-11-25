@@ -70,7 +70,7 @@ fun DiaryDetailScreen(navController: NavController, diaryId: String?, viewModel:
                     Button(onClick = { navController.popBackStack()}) {
                         Text(text = "Back")
                     }
-                    SpacerComponent()
+                    SpacerComponent(30)
                     ListItemComponent("Activity", currentDiaryState?.description, Icons.Filled.DirectionsRun, backGroundHex)
                     ListItemComponent("Hobby", currentDiaryState?.hobby?.title, Icons.Filled.Accessibility, backGroundHex)
 
@@ -105,7 +105,7 @@ fun DiaryDetailScreen(navController: NavController, diaryId: String?, viewModel:
 @Composable
 fun EditSocialMediaStatus(diaryId: String?, viewModel: DiaryDetailViewModel = hiltViewModel(), dialogText: String?, currentState: Boolean) {
     var toggleDialog by remember { mutableStateOf(false) }
-    SpacerComponent()
+    SpacerComponent(30)
     Button(onClick = { toggleDialog = true}) {
         if (currentState == true) {
             Text(text = "Unshare")
