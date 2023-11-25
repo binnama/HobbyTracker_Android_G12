@@ -1,5 +1,6 @@
 package hiof.g12.compose.screen.diary.mydiary
 
+import ListItemComponent
 import TopBar
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
@@ -14,11 +15,13 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Accessibility
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Surface
@@ -93,24 +96,23 @@ fun MyDiaryScreen(navController: NavController, viewModel: DiaryViewModel = hilt
 
 @Composable
 fun DiaryItem(navController: NavController, diary: Diary, viewModel: DiaryViewModel = hiltViewModel()) {
-    val formattedDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(diary.startDate)
+    val formattedDate = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(diary.startDate)
 
     var toggleDialog by remember { mutableStateOf(false) }
     val context = LocalContext.current
     fun String.toColor() = Color(android.graphics.Color.parseColor(this))
     val color = diary.hobby.color.toColor()
-    OutlinedCard(
+    ElevatedCard(
         colors = CardDefaults.cardColors(
             containerColor = color,
         ),
-        border = BorderStroke(1.dp, Color.Black),
         modifier = Modifier
             .size(width = 240.dp, height = 200.dp)
     ) {
         Column(
-            verticalArrangement = Arrangement.Center, // Align content vertically centered
-            horizontalAlignment = Alignment.CenterHorizontally, // Align content horizontally centered
-            modifier = Modifier.fillMaxSize() // Take the full available size
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxSize()
         ) {
             Row {
                 Text(
@@ -134,12 +136,7 @@ fun DiaryItem(navController: NavController, diary: Diary, viewModel: DiaryViewMo
                 }
             }
 
-            Text(
-                text = diary.description,
-                modifier = Modifier.padding(16.dp),
-                textAlign = TextAlign.Center,
-                color = Color.White
-            )
+            ListItemComponent(diary.description, diary.hobby.title, Icons.Filled.Accessibility, diary.hobby.color)
 
             Button(
                 onClick = { navController.navigate("DiaryDetailScreen/${diary.uid}") },
@@ -149,7 +146,7 @@ fun DiaryItem(navController: NavController, diary: Diary, viewModel: DiaryViewMo
                     contentColor = Color.Black
                 )
             ) {
-                Text(text = "Vis")
+                Text(text = "Open")
             }
         }
 
