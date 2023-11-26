@@ -83,7 +83,9 @@ dependencies {
     // Hilt
     implementation("com.google.dagger:hilt-android:2.48")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
-    ksp("com.google.dagger:hilt-compiler:2.47")
+    ksp("com.google.dagger:hilt-compiler:2.48")
+    androidTestImplementation ("com.google.dagger:hilt-android-testing:2.48")
+
 
 
     testImplementation("junit:junit:4.13.2")
@@ -97,5 +99,5 @@ dependencies {
     //Navbar
     val nav_version = "2.7.4"
     implementation("androidx.navigation:navigation-compose:$nav_version")
-
+    androidTestImplementation("androidx.navigation:navigation-testing:$nav_version")
 }

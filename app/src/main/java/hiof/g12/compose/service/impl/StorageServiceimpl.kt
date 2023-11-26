@@ -26,7 +26,6 @@ constructor(
     private val firestore: FirebaseFirestore,
     private val auth: AccountService
 ) : StorageService {
-
     // Henter alle brukernes hobbyer
     @OptIn(ExperimentalCoroutinesApi::class)
     override val hobbies: Flow<List<Hobby>>
