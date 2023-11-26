@@ -22,8 +22,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -49,6 +51,7 @@ import hiof.g12.compose.ui.theme.BackGroundColor
 import java.text.SimpleDateFormat
 import java.util.Locale
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyDiaryScreen(navController: NavController, viewModel: DiaryViewModel = hiltViewModel()) {
 
@@ -58,41 +61,36 @@ fun MyDiaryScreen(navController: NavController, viewModel: DiaryViewModel = hilt
         viewModel.fetchSocialPosts()
     }
 
-    Surface(modifier = Modifier.fillMaxSize(), color = BackGroundColor) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            TopBar("Diary", navController)
-
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = 60.dp, bottom = 60.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                if (myDiaries.isNotEmpty()) {
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .widthIn(max = 600.dp)
-                            .padding(16.dp)
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar = { TopBar("My Diaries", navController) },
+        containerColor = BackGroundColor
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            if (myDiaries.isNotEmpty()) {
+                    LazyVerticalGrid(
+                        modifier = Modifier.fillMaxSize()
+                            .padding(10.dp),
+                        columns = GridCells.Fixed(2),
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
-                        LazyVerticalGrid(
-                            modifier = Modifier.fillMaxSize(),
-                            columns = GridCells.Fixed(2),
-                            horizontalArrangement = Arrangement.spacedBy(16.dp),
-                            verticalArrangement = Arrangement.spacedBy(16.dp)
-                        ) {
-                            items(count = myDiaries.size) { index ->
-                                DiaryItem(navController, diary = myDiaries[index])
-                            }
+                        items(count = myDiaries.size) { index ->
+                            DiaryItem(navController, diary = myDiaries[index])
                         }
                     }
-                } else {
-                    Text(
-                        text = "Sad life, no diaries? Add a new one!",
-                        color = Color.White
-                    )
-                }
+
+            } else {
+                Text(
+                    text = "Sad life, no diaries? Add a new one!",
+                    color = Color.White
+                )
             }
         }
     }

@@ -23,6 +23,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -42,6 +43,7 @@ import hiof.g12.compose.screen.diary.mydiary.DiaryViewModel
 import hiof.g12.compose.ui.theme.BackGroundColor
 import hiof.g12.features.convertDateToLocalFormat
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SocialScreen(navController: NavController, viewModel: DiaryViewModel = hiltViewModel()) {
     val socialMediaList by viewModel.socialMedia.collectAsState(emptyList())
@@ -51,19 +53,17 @@ fun SocialScreen(navController: NavController, viewModel: DiaryViewModel = hiltV
         viewModel.fetchSocialPosts()
     }
 
-    Surface(modifier = Modifier.fillMaxSize(), color = BackGroundColor) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            TopBar("Social", navController)
-
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = 60.dp, bottom = 60.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-
-
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar= {TopBar("Socials", navController)},
+        containerColor = BackGroundColor) {innerPadding ->
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
                 if (socialMediaList.isNotEmpty()) {
                     Box(
                         modifier = Modifier
@@ -92,7 +92,6 @@ fun SocialScreen(navController: NavController, viewModel: DiaryViewModel = hiltV
             }
         }
     }
-}
 
 
 @Composable

@@ -12,6 +12,8 @@ import androidx.compose.material.icons.filled.Accessibility
 import androidx.compose.material.icons.filled.DirectionsRun
 import androidx.compose.material.icons.filled.Timelapse
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,34 +33,37 @@ import hiof.g12.compose.ui.theme.BackGroundColor
 import hiof.g12.compose.ui.theme.backGroundHex
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HobbiesDetailScreen(navController: NavController, hobbyId: String?, viewModel: HobbiesViewModel = hiltViewModel()) {
     val currentHobbyState by viewModel.currentHobby.collectAsState()
     val hobbyTimeUsage by viewModel.currentHobbbyTime.collectAsState()
 
-
     LaunchedEffect(hobbyId) {
         viewModel.fetchHobbyDetails(hobbyId ?: "")
     }
-    Surface(modifier = Modifier.fillMaxSize(), color = BackGroundColor) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            TopBar(title = "Hobby: ${currentHobbyState?.title}", navController = navController)
-            Column(modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 60.dp, bottom = 60.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center) {
+
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar= {TopBar("Hobby: ${currentHobbyState?.title}", navController)},
+        containerColor = BackGroundColor) {innerPadding ->
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
                 if (currentHobbyState == null) {
                     ProgressComponent()
                 } else {
+                    ListItemComponent("Hobby", currentHobbyState?.title, Icons.Filled.Accessibility)
+                    ListItemComponent("Total time used on this hobby", hobbyTimeUsage.toString() + " minutes", Icons.Filled.Timelapse)
+                    SpacerComponent()
                     Button(onClick = { navController.popBackStack()}) {
                         Text(text = "Back")
                     }
-                    SpacerComponent(30)
-                    ListItemComponent("Hobby", currentHobbyState?.title, Icons.Filled.Accessibility)
-                    ListItemComponent("Total time used on this hobby", hobbyTimeUsage.toString() + " minutes", Icons.Filled.Timelapse)
                 }
-            }
         }
     }
 }

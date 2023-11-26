@@ -6,7 +6,6 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -22,6 +21,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import hiof.g12.component.SpacerComponent
 import hiof.g12.compose.model.Diary
 import hiof.g12.compose.ui.theme.BackGroundColor
 import hiof.g12.compose.model.Hobby
@@ -61,15 +62,17 @@ fun HomeScreen(
 
     val activeDiary = activeDiaryState.value
 
-    Surface(modifier = Modifier.fillMaxSize(), color = BackGroundColor) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            TopBar("Home", navController)
-
-            Column(
-                modifier = Modifier.align(Alignment.Center),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar= {TopBar("Home", navController)},
+        containerColor = BackGroundColor) {innerPadding ->
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
 
                 // Check if activeDiary is null or not
                 if (activeDiary == null) {
@@ -80,7 +83,6 @@ fun HomeScreen(
 
             }
         }
-    }
 }
 
 @Composable
@@ -88,12 +90,13 @@ fun ActiveActivity(activeDiary: Diary, viewModel: DiaryViewModel = hiltViewModel
     val context = LocalContext.current
     val formattedStartDate = convertDateToLocalFormat(activeDiary.startDate)
     Text(text = "You have started an activity", color = Color.White)
-    Spacer(modifier = Modifier.height(30.dp))
+    SpacerComponent()
+
     ListItemComponent(title = "ACTIVE ACTIVITY", description = "" + activeDiary.description, icon = Icons.Filled.PlayCircle)
     ListItemComponent(title = "Current hobby", description = "" + activeDiary.hobby.title, icon = Icons.Filled.Accessibility)
     ListItemComponent(title = "Activity started", description = "" + formattedStartDate, icon = Icons.Filled.AccessTime)
 
-    Spacer(modifier = Modifier.height(30.dp))
+    SpacerComponent()
 
             Button(
                 onClick = { viewModel.stopActivity(activeDiary.uid)
@@ -125,13 +128,13 @@ fun InActiveActivity(viewModel: DiaryViewModel = hiltViewModel()) {
     val context = LocalContext.current
 
     Text(text = "Start an activity right now, stop being lazy", color = Color.White)
-    Spacer(modifier = Modifier.height(30.dp))
+    SpacerComponent()
 
     Text(text = "Give your activity a name", color = Color.White)
     TextField(value = activityText, onValueChange = {activityText = it})
-    Spacer(modifier = Modifier.height(30.dp))
+    SpacerComponent()
     HobbyDropDownMenu(onHobbySelected = { selectedHobby = it })
-    Spacer(modifier = Modifier.height(30.dp))
+    SpacerComponent()
 
     if (selectedHobby != null) {
         Button(

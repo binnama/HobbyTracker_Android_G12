@@ -14,7 +14,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,50 +37,55 @@ import hiof.g12.compose.ui.theme.BackGroundColor
 import hiof.g12.features.HexToColorObject
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HobbiesScreen(navController: NavController, viewModel: HobbiesViewModel = hiltViewModel()) {
 
     val hobbies by viewModel.hobbies.collectAsState(emptyList())
 
-    Surface(modifier = Modifier.fillMaxSize(), color = BackGroundColor) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            TopBar("Hobbies", navController)
-
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = 60.dp, bottom = 60.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar= {TopBar("My Hobbies", navController)},
+        containerColor = BackGroundColor) {innerPadding ->
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Button(
+                onClick = { navController.navigate(Screens.AddHobbyScreen.name) },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.White,
+                    contentColor = Color.Black
+                ), modifier = Modifier.widthIn(min = 300.dp)
             ) {
-                Button(
-                    onClick = { navController.navigate(Screens.AddHobbyScreen.name) },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color.Black), modifier = Modifier.widthIn(min = 300.dp)
-                ) {
-                    Text(text = "Add a new hobby")
-                    Icon(imageVector = Icons.Filled.Add, contentDescription = null)
-                }
-                if (hobbies.isNotEmpty()) {
-                    LazyColumn {
-                        items(count = hobbies.size) { index ->
-                            HobbyItem(hobby = hobbies[index], navController)
-                        }
+                Text(text = "Add a new hobby")
+                Icon(imageVector = Icons.Filled.Add, contentDescription = null)
+            }
+            if (hobbies.isNotEmpty()) {
+                LazyColumn {
+                    items(count = hobbies.size) { index ->
+                        HobbyItem(hobby = hobbies[index], navController)
                     }
-                } else {
-                    Text(
-                        text = "Empty, try adding some new hobbies.",
-                        color = Color.Gray
-                    )
                 }
+            } else {
+                Text(
+                    text = "Empty, try adding some new hobbies.",
+                    color = Color.Gray
+                )
             }
         }
     }
 }
 
+
 @Composable
 fun HobbyItem(hobby: Hobby, navController: NavController) {
     val color = HexToColorObject( hobby.color)
-    Button(onClick = { navController.navigate("HobbiesDetailScreen/${hobby.uid}") }, colors = ButtonDefaults.buttonColors(containerColor = color, contentColor = Color.White), modifier = Modifier.widthIn(min = 300.dp)) {
-        Text(text = hobby.title)
+
+        Button(onClick = { navController.navigate("HobbiesDetailScreen/${hobby.uid}") }, colors = ButtonDefaults.buttonColors(containerColor = color, contentColor = Color.White), modifier = Modifier.widthIn(min = 300.dp)) {
+            Text(text = hobby.title)
     }
 }

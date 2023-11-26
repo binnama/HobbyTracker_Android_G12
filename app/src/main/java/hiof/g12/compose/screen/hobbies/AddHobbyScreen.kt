@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -15,6 +16,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -30,6 +32,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import hiof.g12.component.SpacerComponent
 
 import hiof.g12.compose.ui.theme.BackGroundColor
 
@@ -41,19 +44,23 @@ fun AddHobbyScreen(navController: NavController, viewModel: HobbiesViewModel = h
     var hobbyText by remember { mutableStateOf("") }
     var selectedColor by remember { mutableStateOf("Blue") }
     val context = LocalContext.current
-    Surface(modifier = Modifier.fillMaxSize(), color = BackGroundColor) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            TopBar("Add Hobby", navController)
-
-            Column(
-                modifier = Modifier.align(Alignment.Center),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar= {TopBar("Add Hobby", navController)},
+        containerColor = BackGroundColor) {innerPadding ->
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+                Text(text = "Add a new hobby", color = Color.White)
+                SpacerComponent()
                 TextField(value = hobbyText, onValueChange = { hobbyText = it }, label = { Text(text = "Add hobby title") })
-                Spacer(modifier = Modifier.height(30.dp))
+                SpacerComponent()
                 EditableExposedDropdownMenuSample(onColorSelected = { selectedColor = it })
-                Spacer(modifier = Modifier.height(30.dp))
+                SpacerComponent()
                 Button(
                     onClick = {
                         viewModel.addHobby(hobbyText, selectedColor)
@@ -79,7 +86,6 @@ fun AddHobbyScreen(navController: NavController, viewModel: HobbiesViewModel = h
                     Text(text = "Cancel")
                 }
             }
-        }
     }
 }
 

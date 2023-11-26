@@ -18,6 +18,8 @@ import androidx.compose.material.icons.filled.Start
 import androidx.compose.material.icons.filled.StopCircle
 import androidx.compose.material.icons.filled.Timelapse
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -42,6 +44,7 @@ import hiof.g12.features.convertDateToLocalFormat
 import hiof.g12.features.convertToMinutesAndSeconds
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DiaryDetailScreen(navController: NavController, diaryId: String?, viewModel: DiaryDetailViewModel = hiltViewModel()) {
     val currentDiaryState by viewModel.currentDiary.collectAsState()
@@ -53,54 +56,54 @@ fun DiaryDetailScreen(navController: NavController, diaryId: String?, viewModel:
     LaunchedEffect(diaryId) {
         viewModel.fetchDiaryDetails(diaryId ?: "")
     }
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar= {TopBar("Diary Detail", navController)},
+        containerColor = BackGroundColor) {innerPadding ->
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            if (currentDiaryState == null) {
+                ProgressComponent()
+            } else {
+                Button(onClick = { navController.popBackStack()}) {
+                    Text(text = "Back")
+                }
+                SpacerComponent(30)
+                ListItemComponent("Activity", currentDiaryState?.description, Icons.Filled.DirectionsRun)
+                ListItemComponent("Hobby", currentDiaryState?.hobby?.title, Icons.Filled.Accessibility)
 
-    Surface(modifier = Modifier.fillMaxSize(), color = BackGroundColor) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            TopBar("Diary Detail", navController)
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = 60.dp, bottom = 60.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                if (currentDiaryState == null) {
-                    ProgressComponent()
+                if (startDate != null && stopDate != null) {
+                    val formattedStartDate = convertDateToLocalFormat(startDate)
+                    val formattedStopDate = convertDateToLocalFormat(stopDate)
+                    val formattedTimeSpent = convertToMinutesAndSeconds(startDate, stopDate)
+
+                    ListItemComponent("Started", formattedStartDate, Icons.Filled.Start)
+                    ListItemComponent("Stopped", formattedStopDate, Icons.Filled.StopCircle)
+                    ListItemComponent("Time elapsed in minutes", formattedTimeSpent, Icons.Filled.Timelapse)
                 } else {
-                    Button(onClick = { navController.popBackStack()}) {
-                        Text(text = "Back")
-                    }
-                    SpacerComponent(30)
-                    ListItemComponent("Activity", currentDiaryState?.description, Icons.Filled.DirectionsRun)
-                    ListItemComponent("Hobby", currentDiaryState?.hobby?.title, Icons.Filled.Accessibility)
+                    ListItemComponent("Time", "Can't calculate time. Have you stopped your activity?", Icons.Filled.Timelapse)
+                }
 
-                    if (startDate != null && stopDate != null) {
-                        val formattedStartDate = convertDateToLocalFormat(startDate)
-                        val formattedStopDate = convertDateToLocalFormat(stopDate)
-                        val formattedTimeSpent = convertToMinutesAndSeconds(startDate, stopDate)
+                if (currentDiaryState?.socialMedia != true) {
+                    ListItemComponent("Social Media", "This activity has not been shared to the public", Icons.Filled.Share)
+                    EditSocialMediaStatus(diaryId, viewModel,  "Do you want to share this on socials?", currentDiaryState?.socialMedia!!)
+                } else {
+                    ListItemComponent("Social Media", "This activity has been shared to the public", Icons.Filled.Share)
+                    EditSocialMediaStatus(diaryId, viewModel,  "Do you want to remove this from socials?",
+                        currentDiaryState?.socialMedia!!
+                    )
 
-                        ListItemComponent("Started", formattedStartDate, Icons.Filled.Start)
-                        ListItemComponent("Stopped", formattedStopDate, Icons.Filled.StopCircle)
-                        ListItemComponent("Time elapsed in minutes", formattedTimeSpent, Icons.Filled.Timelapse)
-                    } else {
-                        ListItemComponent("Time", "Can't calculate time. Have you stopped your activity?", Icons.Filled.Timelapse)
-                    }
-
-                    if (currentDiaryState?.socialMedia != true) {
-                        ListItemComponent("Social Media", "This activity has not been shared to the public", Icons.Filled.Share)
-                        EditSocialMediaStatus(diaryId, viewModel,  "Do you want to share this on socials?", currentDiaryState?.socialMedia!!)
-                    } else {
-                        ListItemComponent("Social Media", "This activity has been shared to the public", Icons.Filled.Share)
-                        EditSocialMediaStatus(diaryId, viewModel,  "Do you want to remove this from socials?",
-                            currentDiaryState?.socialMedia!!
-                        )
-
-                    }
                 }
             }
         }
     }
 }
+
 
 @Composable
 fun EditSocialMediaStatus(diaryId: String?, viewModel: DiaryDetailViewModel = hiltViewModel(), dialogText: String?, currentState: Boolean) {
