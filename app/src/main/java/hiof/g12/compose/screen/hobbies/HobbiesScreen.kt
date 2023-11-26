@@ -61,7 +61,7 @@ fun HobbiesScreen(navController: NavController, viewModel: HobbiesViewModel = hi
                 if (hobbies.isNotEmpty()) {
                     LazyColumn {
                         items(count = hobbies.size) { index ->
-                            HobbyItem(hobby = hobbies[index])
+                            HobbyItem(hobby = hobbies[index], navController)
                         }
                     }
                 } else {
@@ -76,9 +76,9 @@ fun HobbiesScreen(navController: NavController, viewModel: HobbiesViewModel = hi
 }
 
 @Composable
-fun HobbyItem(hobby: Hobby) {
+fun HobbyItem(hobby: Hobby, navController: NavController) {
     val color = HexToColorObject( hobby.color)
-    Button(onClick = { /*Gjør ingenting. Les videreutvikling*/ }, colors = ButtonDefaults.buttonColors(containerColor = color, contentColor = Color.White), modifier = Modifier.widthIn(min = 300.dp)) {
+    Button(onClick = { navController.navigate("HobbiesDetailScreen/${hobby.uid}") }, colors = ButtonDefaults.buttonColors(containerColor = color, contentColor = Color.White), modifier = Modifier.widthIn(min = 300.dp)) {
         Text(text = hobby.title)
     }
 }

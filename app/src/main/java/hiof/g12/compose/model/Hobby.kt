@@ -10,6 +10,6 @@ data class Hobby (
     var userId: String = "",
     )
 
-fun Hobby.toDisplayString(): String {
-    return title
+{
+    constructor() : this("", "", "", "")
 }

@@ -20,6 +20,7 @@ enum class Screens {
     // HOBBIES
     HobbiesScreen,
     AddHobbyScreen,
+    HobbiesDetailScreen,
 
     // KALENDER
     CalendarScreen,

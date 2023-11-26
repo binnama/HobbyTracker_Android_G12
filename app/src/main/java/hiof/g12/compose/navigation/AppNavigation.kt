@@ -25,6 +25,7 @@ import hiof.g12.compose.screen.authentication.register.RegisterScreen
 import hiof.g12.compose.screen.social.SocialScreen
 import hiof.g12.compose.screen.authentication.welcome.WelcomeScreen
 import hiof.g12.compose.screen.diary.diarydetail.DiaryDetailScreen
+import hiof.g12.compose.screen.hobbies.HobbiesDetail.HobbiesDetailScreen
 import hiof.g12.compose.screen.menu.MenuScreen
 import hiof.g12.compose.screen.user.UserScreen
 
@@ -83,6 +84,10 @@ fun AppNavigation() {
             }
             composable(route = Screens.HobbiesScreen.name) {
                 HobbiesScreen(navController = navController)
+            }
+            composable(route = Screens.HobbiesDetailScreen.name + "/{hobbyId}") { backStackEntry ->
+                val hobbyId = backStackEntry.arguments?.getString("hobbyId")
+                HobbiesDetailScreen(navController = navController, hobbyId = hobbyId)
             }
             composable(route = Screens.AddHobbyScreen.name) {
                 AddHobbyScreen(navController = navController)

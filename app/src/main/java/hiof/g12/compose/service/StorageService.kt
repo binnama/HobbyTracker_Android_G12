@@ -15,6 +15,8 @@ interface StorageService {
 
     suspend fun saveHobby(hobby: Hobby): String
 
+    suspend fun fetchHobbyUsageTime(hobbyId: String): Int
+
     // Diary Storage
     val diaries: Flow<List<Diary>>
 
