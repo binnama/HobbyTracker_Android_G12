@@ -28,7 +28,8 @@ import hiof.g12.compose.screen.diary.diarydetail.DiaryDetailScreen
 import hiof.g12.compose.screen.hobbies.HobbiesDetail.HobbiesDetailScreen
 import hiof.g12.compose.screen.menu.MenuScreen
 import hiof.g12.compose.screen.user.UserScreen
-
+// Mye av logikken for bottomNav er hentet fra YouTube tutorial:
+// https://www.youtube.com/watch?v=5zDMdPHCRHs&t=252s&ab_channel=AndroidWork
 
 // Returnerer false hvis bruker er på noen av disse sidene. Denne brukes for å vise bottom navbar.
 @Composable
