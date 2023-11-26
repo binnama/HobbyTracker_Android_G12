@@ -71,26 +71,26 @@ fun DiaryDetailScreen(navController: NavController, diaryId: String?, viewModel:
                         Text(text = "Back")
                     }
                     SpacerComponent(30)
-                    ListItemComponent("Activity", currentDiaryState?.description, Icons.Filled.DirectionsRun, backGroundHex)
-                    ListItemComponent("Hobby", currentDiaryState?.hobby?.title, Icons.Filled.Accessibility, backGroundHex)
+                    ListItemComponent("Activity", currentDiaryState?.description, Icons.Filled.DirectionsRun)
+                    ListItemComponent("Hobby", currentDiaryState?.hobby?.title, Icons.Filled.Accessibility)
 
                     if (startDate != null && stopDate != null) {
                         val formattedStartDate = convertDateToLocalFormat(startDate)
                         val formattedStopDate = convertDateToLocalFormat(stopDate)
                         val formattedTimeSpent = convertToMinutesAndSeconds(startDate, stopDate)
 
-                        ListItemComponent("Started", formattedStartDate, Icons.Filled.Start, backGroundHex)
-                        ListItemComponent("Stopped", formattedStopDate, Icons.Filled.StopCircle, backGroundHex)
-                        ListItemComponent("Time elapsed in minutes", formattedTimeSpent, Icons.Filled.Timelapse, backGroundHex)
+                        ListItemComponent("Started", formattedStartDate, Icons.Filled.Start)
+                        ListItemComponent("Stopped", formattedStopDate, Icons.Filled.StopCircle)
+                        ListItemComponent("Time elapsed in minutes", formattedTimeSpent, Icons.Filled.Timelapse)
                     } else {
-                        ListItemComponent("Time", "Can't calculate time. Have you stopped your activity?", Icons.Filled.Timelapse, backGroundHex)
+                        ListItemComponent("Time", "Can't calculate time. Have you stopped your activity?", Icons.Filled.Timelapse)
                     }
 
                     if (currentDiaryState?.socialMedia != true) {
-                        ListItemComponent("Social Media", "This activity has not been shared to the public", Icons.Filled.Share, backGroundHex)
+                        ListItemComponent("Social Media", "This activity has not been shared to the public", Icons.Filled.Share)
                         EditSocialMediaStatus(diaryId, viewModel,  "Do you want to share this on socials?", currentDiaryState?.socialMedia!!)
                     } else {
-                        ListItemComponent("Social Media", "This activity has been shared to the public", Icons.Filled.Share, backGroundHex)
+                        ListItemComponent("Social Media", "This activity has been shared to the public", Icons.Filled.Share)
                         EditSocialMediaStatus(diaryId, viewModel,  "Do you want to remove this from socials?",
                             currentDiaryState?.socialMedia!!
                         )

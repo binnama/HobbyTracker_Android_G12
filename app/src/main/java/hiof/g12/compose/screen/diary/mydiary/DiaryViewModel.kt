@@ -79,7 +79,7 @@ class DiaryViewModel  @Inject constructor(
     fun addDiary(diaryDescription: String, hobby: Hobby) {
         viewModelScope.launch {
             val currentDate = Calendar.getInstance().time
-            val newDiary = Diary(description = diaryDescription, startDate = currentDate, socialMedia= false, hobby= hobby, userId = accountService.currentUserId)
+            val newDiary = Diary(description = diaryDescription, startDate = currentDate, socialMedia= false, hobbyId= hobby.uid, hobby= hobby, userId = accountService.currentUserId)
             storageService.saveDiary(newDiary)
 
             fetchActiveDiary()

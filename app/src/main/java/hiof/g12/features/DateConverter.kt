@@ -32,3 +32,18 @@ fun convertToMinutesAndSeconds(start: Date, stop: Date?): String {
     val formattedTimeSpent = String.format("%02d:%02d", minutes, seconds)
     return formattedTimeSpent
 }
+
+fun convertToMinutes(start: Date, stop: Date?): Int {
+
+    // I tilfelle en aktivitet ikke er enda avsluttet.
+    if (stop == null) {
+        return -1
+    }
+
+    val stopTimeMilliSeconds = stop.time
+    val startTimeMilliSeconds = start.time
+
+    val timeSpentMillis = maxOf(0L, stopTimeMilliSeconds - startTimeMilliSeconds)
+
+    return TimeUnit.MILLISECONDS.toMinutes(timeSpentMillis).toInt()
+}

@@ -1,5 +1,6 @@
 package hiof.g12.compose.service.impl
 
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
@@ -10,9 +11,9 @@ import hiof.g12.compose.model.Diary
 import hiof.g12.compose.model.Hobby
 import hiof.g12.compose.service.AccountService
 import hiof.g12.compose.service.StorageService
+import hiof.g12.features.convertToMinutes
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -40,15 +41,49 @@ constructor(
                 .dataObjects()
         }
 
-    // Hente en spesifikk hobby, denne er ikke brukt noen steder foreløpig
+    // Hente en spesifikk hobby
     override suspend fun getHobby(hobbyId: String): Hobby? =
         firestore.collection(HOBBY_COLLECTION).document(hobbyId).get().await().toObject()
 
 
     // Lagrer en hobby til databasen under brukerId
     override suspend fun saveHobby(hobby: Hobby): String {
-        val movieWithUserId = hobby.copy(userId = auth.currentUserId)
-        return firestore.collection(HOBBY_COLLECTION).add(movieWithUserId).await().id
+        val hobbyWithUserId = hobby.copy(userId = auth.currentUserId)
+        return firestore.collection(HOBBY_COLLECTION).add(hobbyWithUserId).await().id
+    }
+
+
+    // Funksjon som kalkulerer tid brukt for en spesifikk hobby
+    override suspend fun fetchHobbyUsageTime(hobbyId: String): Int {
+        var hobbyUsageTime: Int = 0
+
+        val queryData = firestore.collection(DIARY_COLLLECTION)
+            .whereEqualTo(HOBBY_ID_FIELD, hobbyId)
+            .get()
+            .await()
+
+        // Itererer gjennom dokumentene som ble funnet
+        for (document in queryData) {
+
+            // Konvertering fra timestamp til toDate
+            // https://stackoverflow.com/questions/38016168/how-to-convert-firebase-timestamp-into-date-and-time
+            val firebaseStartDate = document.get("startDate") as Timestamp
+            val firebaseStopDate = document.get("stopDate") as? Timestamp
+
+            val startDate = firebaseStartDate.toDate()
+            val stopDate = firebaseStopDate?.toDate()
+
+            // Utnytter funksjonen jeg har laget for å konvertere dato til minutter.
+            val totalMinAndSeconds = convertToMinutes(startDate, stopDate)
+
+            // Kalkulerer og adderer kun dersom stopDato finnes.
+            if (stopDate != null) {
+                hobbyUsageTime += totalMinAndSeconds
+            }
+        }
+
+        // Returnerer (Int) tiden brukt for den aktiviteten.
+        return hobbyUsageTime
     }
 
     // Henter alle brukernes diaries
@@ -97,7 +132,7 @@ constructor(
     }
 
 
-    // Henter en spesifikk diary, men brukes ikke foreløpig noen steder.
+    // Henter en spesifikk diary
     override suspend fun getDiary(diaryId: String): Diary? =
         firestore.collection(DIARY_COLLLECTION).document(diaryId).get().await().toObject()
 
@@ -146,6 +181,7 @@ constructor(
         private const val HOBBY_COLLECTION = "hobbies"
         private const val DIARY_COLLLECTION = "diaries"
         private const val USER_ID_FIELD = "userId"
+        private const val HOBBY_ID_FIELD = "hobbyId"
         private const val STOP_DATE = "stopDate"
         private const val SOCIAL_MEDIA = "socialMedia"
     }
