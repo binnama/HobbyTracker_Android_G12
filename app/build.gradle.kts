@@ -22,7 +22,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "hiof.g12.CustomTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -85,6 +85,12 @@ dependencies {
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
     ksp("com.google.dagger:hilt-compiler:2.48")
     androidTestImplementation ("com.google.dagger:hilt-android-testing:2.48")
+    kspTest ("com.google.dagger:hilt-android-compiler:2.48")
+
+
+    // Testing
+    testImplementation ("org.mockito:mockito-core:3.12.4")
+
 
 
 
