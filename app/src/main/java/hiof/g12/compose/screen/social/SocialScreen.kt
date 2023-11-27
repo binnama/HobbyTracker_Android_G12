@@ -48,11 +48,12 @@ import hiof.g12.features.convertDateToLocalFormat
 fun SocialScreen(navController: NavController, viewModel: DiaryViewModel = hiltViewModel()) {
     val socialMediaList by viewModel.socialMedia.collectAsState(emptyList())
 
-
+    // Denne er referert i rapporten
     LaunchedEffect(Unit) {
         viewModel.fetchSocialPosts()
     }
 
+    // Denne er referert i rapporten
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar= {TopBar("Socials", navController)},
